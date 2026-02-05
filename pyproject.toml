@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "demo-recorder"
+version = "0.1.0"
+description = "Automated voice-over demo video tool using Edge TTS + Playwright + ffmpeg"
+requires-python = ">=3.10"
+dependencies = [
+    "edge-tts>=6.1.0",
+    "playwright>=1.40.0",
+    "click>=8.1.0",
+    "pydantic>=2.0.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+demo-recorder = "demo_recorder.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

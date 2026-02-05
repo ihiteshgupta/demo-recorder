@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "title": "Minimal Demo",
+    "description": "A simple demo to verify the recording pipeline works",
+    "base_url": "https://example.com",
+    "viewport": { "width": 1280, "height": 720 },
+    "voice": "en-US-AriaNeural",
+    "rate": "+0%",
+    "output_name": "minimal_demo"
+  },
+  "steps": [
+    {
+      "id": "step_01",
+      "action": "navigate",
+      "url": "/",
+      "narration": "Welcome to this minimal demo. We are visiting example dot com.",
+      "wait_after": 2000
+    },
+    {
+      "id": "step_02",
+      "action": "hover",
+      "selector": "h1",
+      "narration": "Here is the main heading of the page.",
+      "wait_after": 1500
+    },
+    {
+      "id": "step_03",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 200,
+      "narration": "Let's scroll down to see more content.",
+      "wait_after": 1000
+    }
+  ]
+}

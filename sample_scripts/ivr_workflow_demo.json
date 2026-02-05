@@ -1,0 +1,551 @@
+{
+  "metadata": {
+    "title": "IVR Customer Service Workflow - Complete Setup Demo",
+    "description": "Step-by-step creation of an IVR Customer Service Workflow: Functions, Agents, and Workflow with DAG visual editor",
+    "base_url": "http://localhost:8080",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "ivr_workflow_demo"
+  },
+  "steps": [
+    {
+      "id": "s01_login_page",
+      "action": "navigate",
+      "url": "/auth/signin",
+      "narration": "Welcome to the AI Platform. In this demo, we will build a complete IVR Customer Service Workflow from scratch. Let's start by signing in.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s02_enter_credentials",
+      "action": "type",
+      "selector": "#username",
+      "value": "admin",
+      "narration": "We enter the credentials and sign in.",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s03_enter_password",
+      "action": "type",
+      "selector": "#password",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s04_click_signin",
+      "action": "click",
+      "selector": "button:has-text('Sign In')",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s05_dashboard",
+      "action": "navigate",
+      "url": "/dashboard",
+      "narration": "This is the dashboard. It shows key metrics including agent activity, execution trends, and model usage. Our goal today is to build an IVR Customer Service Workflow that classifies customer intent and routes to specialized handlers for data breach, network, billing, or general queries.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s10_nav_functions",
+      "action": "navigate",
+      "url": "/functions/create",
+      "narration": "First, let's create the function our workflow needs. We navigate directly to the function creation page.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s11_function_name",
+      "action": "type",
+      "selector": "#name",
+      "value": "Handle Billing Deviation",
+      "narration": "We name it Handle Billing Deviation. This function routes billing complaints to an analysis workflow.",
+      "type_delay": 50,
+      "wait_after": 500
+    },
+    {
+      "id": "s12_function_desc",
+      "action": "type",
+      "selector": "#description",
+      "value": "Routes to Billing Deviation Workflow for bill shock analysis. Accepts customer_id, msisdn, and channel parameters.",
+      "narration": "We add a description explaining what the function does.",
+      "type_delay": 30,
+      "wait_after": 500
+    },
+    {
+      "id": "s13_scroll_implementation",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Let's scroll down to configure the implementation. The default type is API Call.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s14_fill_endpoint",
+      "action": "type",
+      "selector": "input[placeholder='/api/v1/endpoint']",
+      "value": "/api/v1/billing/deviation",
+      "narration": "We set the API endpoint to the billing deviation analysis service.",
+      "type_delay": 40,
+      "wait_after": 500
+    },
+    {
+      "id": "s15_scroll_to_review",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 500,
+      "narration": "Scrolling down past the parameters section to proceed.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s16_function_next_review",
+      "action": "click",
+      "selector": "button:has-text('Next: Review')",
+      "narration": "Click Next to review the function configuration.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s17_function_create",
+      "action": "click",
+      "selector": "button:has-text('Create Function')",
+      "narration": "Everything looks good. Create the function. Our billing deviation handler is now ready.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s20_nav_agents",
+      "action": "navigate",
+      "url": "/agents/create",
+      "narration": "Now let's create the four agents our workflow needs. We navigate directly to the agent creation page.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s21_select_conversational",
+      "action": "click",
+      "selector": "button:has-text('Conversational')",
+      "narration": "Let's create our first agent — the Intent Classifier. We select the Conversational agent type, which supports multi-turn chat with knowledge access.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s22_agent1_next_configure",
+      "action": "click",
+      "selector": "button:has-text('Next: Configure')",
+      "narration": "Click Next to configure the agent.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s23_agent1_name",
+      "action": "type",
+      "selector": "#name",
+      "value": "Intent Classifier",
+      "narration": "We name it Intent Classifier. It will detect data breach, billing, network, or general queries.",
+      "type_delay": 50,
+      "wait_after": 500
+    },
+    {
+      "id": "s24_agent1_desc",
+      "action": "type",
+      "selector": "#description",
+      "value": "Classifies user intent for IVR routing - detects data breach, billing, network, or general queries",
+      "narration": "Add a clear description of its purpose.",
+      "type_delay": 30,
+      "wait_after": 500
+    },
+    {
+      "id": "s25_agent1_scroll_to_prompt",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Let's scroll down to the system prompt section.",
+      "wait_after": 500
+    },
+    {
+      "id": "s26_agent1_prompt",
+      "action": "type",
+      "selector": "textarea[placeholder*='You are a helpful assistant']",
+      "value": "You are an **Intent Classifier** for IVR systems.\nYou are a **headless API component**, not a chat assistant.\n\nAnalyze the user message and classify the intent. Output ONLY a JSON object.\n\n### RESPONSE SCHEMA\n\n{\n  \"intent\": \"DATA_BREACH | BILLING | NETWORK | GENERAL\",\n  \"confidence\": 0.95,\n  \"keywords_found\": [\"keyword1\", \"keyword2\"],\n  \"customer_id\": \"<extract from input>\",\n  \"msisdn\": \"<extract from input>\",\n  \"channel\": \"<extract from input>\"\n}\n\n### INTENT CLASSIFICATION RULES\n\n**DATA_BREACH** - data breach, data leak, privacy issue, personal data exposed, hacked, unauthorized access\n**BILLING** - bill, billing, payment, charge, invoice, bill shock, overcharge\n**NETWORK** - internet, network, connection, signal, slow, outage\n**GENERAL** - Everything else\n\n### OUTPUT RULES\n1. RAW JSON only - NO markdown, NO code fences\n2. DATA_BREACH takes priority if any breach keywords found\n3. Extract and include FULL customer_id, msisdn, and channel from input",
+      "narration": "Now we paste the prompt instruction. This is the core intelligence of the agent — it defines exactly how to classify intents into data breach, billing, network, or general categories, and specifies the JSON response schema.",
+      "type_delay": 5,
+      "wait_after": 1000
+    },
+    {
+      "id": "s27_agent1_scroll_down",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "The agent also has sections for knowledge bases, functions, and guardrails. For the Intent Classifier, we don't need any of these.",
+      "wait_after": 500
+    },
+    {
+      "id": "s28_agent1_next_review",
+      "action": "click",
+      "selector": "button:has-text('Next: Review')",
+      "narration": "Click Next to review the agent configuration.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s29_agent1_create",
+      "action": "click",
+      "selector": "button:has-text('Create Agent')",
+      "narration": "Create the Intent Classifier agent. Our first agent is ready.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s30_nav_agent2",
+      "action": "navigate",
+      "url": "/agents/create",
+      "narration": "Now let's create the IVR Response Transformer. This agent is reused across three branches of our workflow to convert responses into the standard IVR JSON format.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s31_select_conversational2",
+      "action": "click",
+      "selector": "button:has-text('Conversational')",
+      "narration": "Again we select the Conversational type.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s32_agent2_next_configure",
+      "action": "click",
+      "selector": "button:has-text('Next: Configure')",
+      "narration": "Proceed to configuration.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s33_agent2_name",
+      "action": "type",
+      "selector": "#name",
+      "value": "IVR Response Transformer",
+      "narration": "IVR Response Transformer. It transforms any chatbot output into the standardized IVR JSON schema with sentiment analysis, execution commands, and CRM actions.",
+      "type_delay": 50,
+      "wait_after": 500
+    },
+    {
+      "id": "s34_agent2_desc",
+      "action": "type",
+      "selector": "#description",
+      "value": "Transforms chatbot output to IVR JSON format - headless API component",
+      "narration": "Brief description.",
+      "type_delay": 30,
+      "wait_after": 500
+    },
+    {
+      "id": "s35_agent2_scroll_prompt",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Scroll to the system prompt.",
+      "wait_after": 500
+    },
+    {
+      "id": "s36_agent2_prompt",
+      "action": "type",
+      "selector": "textarea[placeholder*='You are a helpful assistant']",
+      "value": "You are an **IVR response transformer**.\nYou are a **headless API component**, not a chat assistant.\n\nAnalyze the incoming message and produce **exactly ONE valid IVR JSON response**.\n\n### RESPONSE SCHEMA\n{\n  \"analysis\": {\n    \"sentiment\": \"NEGATIVE\",\n    \"classification\": \"BILLING\",\n    \"conversation_summary\": \"Brief summary max 150 chars\"\n  },\n  \"execution_command\": \"ANNOUNCE_AND_WHATSAPP\",\n  \"payloads\": {\n    \"tts_message\": \"Voice message string\",\n    \"whatsapp_message\": \"WhatsApp message string or null\",\n    \"crm_action\": {\n      \"create_ticket\": true,\n      \"category\": \"BILLING\",\n      \"priority\": \"HIGH\"\n    }\n  },\n  \"expect_user_input\": false\n}\n\n### CHANNEL RULES\n- IVR/WEB + NEGATIVE: ANNOUNCE_AND_WHATSAPP (both messages)\n- IVR/WEB + NEUTRAL: ANNOUNCE_ONLY (tts only)\n- WHATSAPP/SMS: WHATSAPP_ONLY (whatsapp only)\n\n### OUTPUT RULES\n1. RAW JSON only\n2. NEVER include customer ID in messages\n3. Start messages with Hi, not Dear Customer",
+      "narration": "We paste the prompt. The transformer handles channel detection, sentiment analysis, and outputs structured IVR responses with TTS messages, WhatsApp notifications, and CRM ticket creation.",
+      "type_delay": 5,
+      "wait_after": 1000
+    },
+    {
+      "id": "s37_agent2_scroll_down",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Scrolling past the capabilities section.",
+      "wait_after": 500
+    },
+    {
+      "id": "s38_agent2_next_review",
+      "action": "click",
+      "selector": "button:has-text('Next: Review')",
+      "narration": "Proceed to review.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s39_agent2_create",
+      "action": "click",
+      "selector": "button:has-text('Create Agent')",
+      "narration": "Create the IVR Response Transformer. This agent will be used in three different branches of our workflow.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s40_nav_agent3",
+      "action": "navigate",
+      "url": "/agents/create",
+      "narration": "Now let's create the Data Breach IVR Handler — a specialized agent for handling sensitive data breach reports.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s41_select_conversational3",
+      "action": "click",
+      "selector": "button:has-text('Conversational')",
+      "narration": "Select Conversational type.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s42_agent3_next_configure",
+      "action": "click",
+      "selector": "button:has-text('Next: Configure')",
+      "narration": "Proceed to configuration.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s43_agent3_name",
+      "action": "type",
+      "selector": "#name",
+      "value": "Data Breach IVR Handler",
+      "narration": "Data Breach IVR Handler. This agent guides users through a multi-step IVR flow to gather breach type and location, then transfers to a human specialist.",
+      "type_delay": 50,
+      "wait_after": 500
+    },
+    {
+      "id": "s44_agent3_desc",
+      "action": "type",
+      "selector": "#description",
+      "value": "Handles data breach, privacy, and data leak reports. Guides users through 2-3 options to gather breach type and location, then transfers to human agent.",
+      "narration": "A detailed description of the breach handler.",
+      "type_delay": 30,
+      "wait_after": 500
+    },
+    {
+      "id": "s45_agent3_scroll_prompt",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Scroll to system prompt.",
+      "wait_after": 500
+    },
+    {
+      "id": "s46_agent3_prompt",
+      "action": "type",
+      "selector": "textarea[placeholder*='You are a helpful assistant']",
+      "value": "You are a **Data Breach/Privacy IVR Handler**.\nYou are a **headless API component**, not a chat assistant.\n\nHelp customers who report data breach or privacy issues. Guide through options, then transfer to human agent.\n\n### RESPONSE SCHEMA\n{\n  \"analysis\": {\n    \"sentiment\": \"NEGATIVE\",\n    \"classification\": \"DATA_BREACH\",\n    \"conversation_summary\": \"Brief summary\",\n    \"interaction_count\": 1\n  },\n  \"execution_command\": \"ANNOUNCE_AND_WHATSAPP\",\n  \"payloads\": {\n    \"tts_message\": \"Voice message with options\",\n    \"whatsapp_message\": \"Same message for WhatsApp\",\n    \"crm_action\": {\n      \"create_ticket\": true,\n      \"category\": \"DATA_BREACH\",\n      \"priority\": \"CRITICAL\",\n      \"collected_info\": {}\n    }\n  },\n  \"expect_user_input\": true\n}\n\n### INTERACTION FLOW\n1. Ask breach type: personal data leak, financial breach, or credentials compromised\n2. Ask location: mobile app, website, SMS/email, third party\n3. Confirm and transfer to data security specialist\n\n### RULES\n- Always CRITICAL priority\n- Always populate BOTH tts and whatsapp messages\n- Maximum 3 interactions then TRANSFER_TO_AGENT\n- RAW JSON only, no markdown",
+      "narration": "The prompt defines a three-step interaction flow. First it asks the type of breach, then where it was noticed, and finally confirms and transfers to a human data security specialist. All interactions create CRM tickets with critical priority.",
+      "type_delay": 5,
+      "wait_after": 1000
+    },
+    {
+      "id": "s47_agent3_scroll_down",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Scrolling past capabilities.",
+      "wait_after": 500
+    },
+    {
+      "id": "s48_agent3_next_review",
+      "action": "click",
+      "selector": "button:has-text('Next: Review')",
+      "narration": "Proceed to review.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s49_agent3_create",
+      "action": "click",
+      "selector": "button:has-text('Create Agent')",
+      "narration": "Create the Data Breach Handler. Three agents done, one more to go.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s50_nav_agent4",
+      "action": "navigate",
+      "url": "/agents/create",
+      "narration": "Finally, let's create the Intelligent Customer Chatbot — the most capable agent in our workflow. It handles general inquiries with access to customer data tools and a knowledge base.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s51_select_conversational4",
+      "action": "click",
+      "selector": "button:has-text('Conversational')",
+      "narration": "Select Conversational type.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s52_agent4_next_configure",
+      "action": "click",
+      "selector": "button:has-text('Next: Configure')",
+      "narration": "Proceed to configuration.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s53_agent4_name",
+      "action": "type",
+      "selector": "#name",
+      "value": "Intelligent Customer Chatbot Agent",
+      "narration": "The Intelligent Customer Chatbot Agent. It provides conversational support for account inquiries, billing questions, trouble tickets, and order history.",
+      "type_delay": 50,
+      "wait_after": 500
+    },
+    {
+      "id": "s54_agent4_desc",
+      "action": "type",
+      "selector": "#description",
+      "value": "AI-powered customer service chatbot that helps with account inquiries, billing questions, trouble tickets, order history, and automated billing deviation analysis.",
+      "narration": "A comprehensive description.",
+      "type_delay": 30,
+      "wait_after": 500
+    },
+    {
+      "id": "s55_agent4_scroll_prompt",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Scroll to system prompt.",
+      "wait_after": 500
+    },
+    {
+      "id": "s56_agent4_prompt",
+      "action": "type",
+      "selector": "textarea[placeholder*='You are a helpful assistant']",
+      "value": "You are an intelligent customer service chatbot. You help customers with account information, billing questions, trouble tickets, and order inquiries.\n\n## CAPABILITIES\n1. Customer Profile - account details, contact info\n2. Trouble Tickets - list open tickets, check status\n3. Order History - past orders and subscriptions\n4. Billing History - view invoices (NOT complaints)\n5. Payment History - payment records\n6. Billing Issue Analysis - ONLY for complaints (bill shock, overbilled)\n7. Workflow Status - check analysis progress\n\n## CRITICAL RULES\n- Use Billing History for \"show my bill\" requests\n- Use Billing Workflow ONLY for complaints (shock, error, overbilled)\n- Always ask for customer ID if not provided\n- Present data in readable format, not JSON\n- Be conversational and friendly\n- NEVER trigger billing workflow for simple viewing requests",
+      "narration": "The chatbot prompt defines seven capabilities including customer profile lookup, ticket management, billing history, and the critical distinction between viewing bills versus billing complaints. Only complaints trigger the billing deviation workflow.",
+      "type_delay": 5,
+      "wait_after": 1000
+    },
+    {
+      "id": "s57_agent4_scroll_down",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "This agent would typically have functions for customer data tools and a knowledge base configured here. For now, we proceed.",
+      "wait_after": 500
+    },
+    {
+      "id": "s58_agent4_next_review",
+      "action": "click",
+      "selector": "button:has-text('Next: Review')",
+      "narration": "Proceed to review.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s59_agent4_create",
+      "action": "click",
+      "selector": "button:has-text('Create Agent')",
+      "narration": "Create the Customer Chatbot. All four agents are now created. Let's build the workflow.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s60_nav_workflows",
+      "action": "navigate",
+      "url": "/workflows/create",
+      "narration": "Now we navigate directly to the workflow creation page. This is where we connect all our agents and functions into a complete IVR pipeline.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s61_click_visual_editor",
+      "action": "click",
+      "selector": "button:has-text('Visual Editor')",
+      "narration": "We switch to the Visual Editor. This provides a drag-and-drop DAG canvas for building complex workflows.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s62_workflow_name",
+      "action": "type",
+      "selector": "#name-visual",
+      "value": "IVR Customer Service Workflow",
+      "narration": "We name it IVR Customer Service Workflow.",
+      "type_delay": 50,
+      "wait_after": 500
+    },
+    {
+      "id": "s63_workflow_desc",
+      "action": "type",
+      "selector": "#description-visual",
+      "value": "Classifies intent, routes data breach/network/billing to specialist handlers, otherwise processes via chatbot",
+      "narration": "The description explains the entire flow — classify intent, then route to four specialized paths.",
+      "type_delay": 30,
+      "wait_after": 1500
+    },
+    {
+      "id": "s64_scroll_to_canvas",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "This is the workflow visual editor. It provides nodes for Start, Task, Condition, Fork, Join, Loop, and End. Let's scroll down to the canvas area and build our workflow.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s65_add_start_node",
+      "action": "click",
+      "selector": "button:has-text('Start')",
+      "narration": "Let's add a Start node. Every workflow begins with a Start node that receives the initial input.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s66_add_task_node",
+      "action": "click",
+      "selector": "button:has-text('Task')",
+      "narration": "Now add a Task node. This would be our Intent Classifier agent.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s66b_add_task_node2",
+      "action": "click",
+      "selector": "button:has-text('Task')",
+      "narration": "Another Task node for the IVR Response Transformer.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s67_add_condition_node",
+      "action": "click",
+      "selector": "button:has-text('Condition')",
+      "narration": "Add a Condition node. This is the routing hub that checks the intent classification and branches to the appropriate handler.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s67b_add_task_node3",
+      "action": "click",
+      "selector": "button:has-text('Task')",
+      "narration": "A Task node for the Data Breach Handler branch.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s67c_add_task_node4",
+      "action": "click",
+      "selector": "button:has-text('Task')",
+      "narration": "And another Task for the Customer Chatbot branch.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s68_add_end_node",
+      "action": "click",
+      "selector": "button:has-text('End')",
+      "narration": "Finally an End node to complete the flow.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s69_auto_layout",
+      "action": "click",
+      "selector": "button:has-text('Auto Layout')",
+      "narration": "Click Auto Layout to organize the nodes into a readable DAG structure. The visual editor automatically arranges all nodes and edges.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s69b_workflow_canvas_screenshot",
+      "action": "screenshot",
+      "narration": "Here is our workflow layout with all the nodes arranged. In the full setup, each Task node would be connected to its corresponding agent, and the Condition node would have branch expressions like intent equals DATA BREACH to route traffic appropriately.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s70_save_workflow",
+      "action": "click",
+      "selector": "button:has-text('Save')",
+      "narration": "Save the workflow.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s80_conclusion",
+      "action": "navigate",
+      "url": "/workflows",
+      "narration": "Let's return to the Workflows list. We have successfully created all the components for our IVR Customer Service Workflow. To summarize: we created one function for billing deviation handling, four specialized agents — Intent Classifier, IVR Response Transformer, Data Breach Handler, and Customer Chatbot — and connected them in a conditional DAG workflow. This completes our demo. Thank you for watching.",
+      "wait_after": 5000
+    }
+  ]
+}

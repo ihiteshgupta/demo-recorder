@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "title": "Visual Demo",
+    "description": "A visually interesting demo for preview",
+    "base_url": "https://news.ycombinator.com",
+    "viewport": { "width": 1280, "height": 720 },
+    "voice": "en-US-GuyNeural",
+    "rate": "+0%",
+    "output_name": "visual_demo"
+  },
+  "steps": [
+    {
+      "id": "step_01",
+      "action": "navigate",
+      "url": "/",
+      "narration": "Welcome. This is Hacker News, a popular technology news aggregator.",
+      "wait_after": 2000
+    },
+    {
+      "id": "step_02",
+      "action": "hover",
+      "selector": ".titleline >> nth=0 >> a",
+      "narration": "Here we can see the top stories ranked by community votes.",
+      "wait_after": 1500
+    },
+    {
+      "id": "step_03",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Let's scroll down to explore more stories on the front page.",
+      "wait_after": 2000
+    }
+  ]
+}

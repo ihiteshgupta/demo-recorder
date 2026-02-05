@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "title": "AI Platform Demo",
+    "description": "Walkthrough of agent creation on an AI platform",
+    "base_url": "http://localhost:8080",
+    "viewport": { "width": 1280, "height": 720 },
+    "voice": "en-US-GuyNeural",
+    "rate": "+0%",
+    "output_name": "ai_platform_demo"
+  },
+  "steps": [
+    {
+      "id": "step_01",
+      "action": "navigate",
+      "url": "/",
+      "narration": "Welcome to the AI Platform. This is the main dashboard showing key metrics and activity.",
+      "wait_after": 2000
+    },
+    {
+      "id": "step_02",
+      "action": "navigate",
+      "url": "/agents",
+      "narration": "Let's navigate to the Agents page where we can manage our AI agents.",
+      "wait_after": 1500
+    },
+    {
+      "id": "step_03",
+      "action": "click",
+      "selector": "button:has-text('Create')",
+      "narration": "Click the Create button to start building a new agent.",
+      "wait_after": 1500
+    },
+    {
+      "id": "step_04",
+      "action": "type",
+      "selector": "#agent-name",
+      "value": "Customer Support Agent",
+      "narration": "Enter the agent name. We'll call this one Customer Support Agent.",
+      "type_delay": 50,
+      "wait_after": 1000
+    },
+    {
+      "id": "step_05",
+      "action": "type",
+      "selector": "#agent-description",
+      "value": "Handles customer inquiries and provides support using knowledge base and tools.",
+      "narration": "Add a description that explains what this agent does.",
+      "type_delay": 30,
+      "wait_after": 1000
+    },
+    {
+      "id": "step_06",
+      "action": "click",
+      "selector": "button:has-text('Save')",
+      "narration": "Save the agent configuration. The agent is now ready for use.",
+      "wait_after": 2000
+    },
+    {
+      "id": "step_07",
+      "action": "navigate",
+      "url": "/workflows",
+      "narration": "Next, let's look at the Workflows page where we can create automated pipelines.",
+      "wait_after": 2000
+    },
+    {
+      "id": "step_08",
+      "action": "screenshot",
+      "narration": "This concludes our demo of the AI Platform. Thank you for watching.",
+      "wait_after": 3000
+    }
+  ]
+}
