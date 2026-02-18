@@ -1,0 +1,285 @@
+{
+  "metadata": {
+    "title": "AI-Powered Billing Dispute Resolution — End-to-End Demo",
+    "description": "A customer reports a $30 billing overcharge via Telegram. The AI bot gathers details through natural conversation, resolves the dispute autonomously, with workflow orchestration and CRM ticket verification.",
+    "base_url": "",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "billing_dispute_30_demo",
+    "storage_state": "/Users/hitesh.gupta/office-projects/demo-recorder/telegram_auth.json"
+  },
+  "steps": [
+
+    {
+      "id": "s01_open_telegram",
+      "action": "navigate",
+      "url": "https://web.telegram.org/k/#@bluemarble_support_bot",
+      "narration": "A customer notices an unexpected charge on their bill and opens their telecom provider's AI support bot on Telegram.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s02_wait_and_clean",
+      "action": "wait",
+      "duration": 5000,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s03_hide_sidebar",
+      "action": "evaluate",
+      "expression": "(() => { const s = document.createElement('style'); s.id = 'demo-styles'; s.textContent = '.sidebar-left, .chatlist-container { display: none !important; } #column-center { margin-left: 0 !important; } .chat { left: 0 !important; } .demo-hide-old { display: none !important; }'; document.head.appendChild(s); document.querySelectorAll('.bubble').forEach(b => b.classList.add('demo-hide-old')); document.querySelectorAll('.date-group-title').forEach(d => d.classList.add('demo-hide-old')); })()",
+      "narration": "No app to install, no call center — just a familiar messaging interface.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s03b_click_start",
+      "action": "evaluate",
+      "expression": "(() => { const btn = document.querySelector('.bot-button') || document.querySelector('.chat-input-control-button'); if(btn) { btn.disabled = false; btn.style.display = ''; btn.click(); } })()",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s03c_hide_service",
+      "action": "evaluate",
+      "expression": "(() => { const s = document.getElementById('demo-styles'); if(s) s.textContent += ' .bubbles-inner > .service { display: none !important; }'; document.querySelectorAll('.bubbles-inner > .service').forEach(e => e.style.display='none'); })()",
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s04_focus_1",
+      "action": "evaluate",
+      "expression": "document.querySelector('.input-message-input').focus()",
+      "narration": "",
+      "wait_after": 300
+    },
+    {
+      "id": "s05_type_complaint",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "Hi, I think I was overcharged on my last bill. The amount doesn't look right.",
+      "type_delay": 25,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s06_send_complaint",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 8000
+    },
+    {
+      "id": "s07_scroll_reply_1",
+      "action": "evaluate",
+      "expression": "(() => { const b = document.querySelector('.bubbles'); const el = b ? (b.closest('.scrollable-y') || b.parentElement) : null; if(el) el.scrollTop = el.scrollHeight; })()",
+      "narration": "The AI classifies this as a billing complaint. It asks a targeted follow-up — requesting the customer's account ID.",
+      "wait_after": 2000
+    },
+
+    {
+      "id": "s08_focus_2",
+      "action": "evaluate",
+      "expression": "document.querySelector('.input-message-input').focus()",
+      "narration": "",
+      "wait_after": 300
+    },
+    {
+      "id": "s09_type_id_and_month",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "My customer ID is C006064. It was on my January 2026 bill.",
+      "type_delay": 25,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s10_send_id_and_month",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 8000
+    },
+    {
+      "id": "s11_scroll_reply_2",
+      "action": "evaluate",
+      "expression": "(() => { const b = document.querySelector('.bubbles'); const el = b ? (b.closest('.scrollable-y') || b.parentElement) : null; if(el) el.scrollTop = el.scrollHeight; })()",
+      "narration": "The platform validates the customer against the CRM, confirms the account, and asks for the expected versus actual charge.",
+      "wait_after": 2000
+    },
+
+    {
+      "id": "s12_focus_3",
+      "action": "evaluate",
+      "expression": "document.querySelector('.input-message-input').focus()",
+      "narration": "",
+      "wait_after": 300
+    },
+    {
+      "id": "s13_type_amounts",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "I normally pay 599 but was charged 629, that's 30 dollars extra",
+      "type_delay": 25,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s14_send_amounts",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 10000
+    },
+    {
+      "id": "s15_scroll_resolution",
+      "action": "evaluate",
+      "expression": "(() => { const b = document.querySelector('.bubbles'); const el = b ? (b.closest('.scrollable-y') || b.parentElement) : null; if(el) el.scrollTop = el.scrollHeight; })()",
+      "narration": "All details gathered. The platform creates a trouble ticket and triggers the billing analysis.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s16_view_resolution",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "The overcharge is identified, a credit applied, and the ticket resolved — three conversational turns, zero human intervention.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s17_transition_to_platform",
+      "action": "wait",
+      "duration": 1500,
+      "narration": "Now let's look behind the scenes at how the AI platform orchestrated this.",
+      "wait_after": 1500
+    },
+
+    {
+      "id": "s18_nav_login",
+      "action": "navigate",
+      "url": "http://localhost:8080/auth/signin",
+      "narration": "",
+      "wait_after": 1500
+    },
+    {
+      "id": "s19_type_user",
+      "action": "type",
+      "selector": "#username",
+      "value": "admin",
+      "type_delay": 60,
+      "narration": "",
+      "wait_after": 200
+    },
+    {
+      "id": "s20_type_pass",
+      "action": "type",
+      "selector": "#password",
+      "value": "admin",
+      "type_delay": 60,
+      "narration": "",
+      "wait_after": 200
+    },
+    {
+      "id": "s21_click_signin",
+      "action": "click",
+      "selector": "button:has-text('Sign In')",
+      "narration": "",
+      "wait_after": 4000
+    },
+    {
+      "id": "s22_nav_workflows",
+      "action": "navigate",
+      "url": "http://localhost:8080/workflows",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s23_view_workflow_list",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s24_click_workflow",
+      "action": "click",
+      "selector": "a:has-text('Channel AI Support')",
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s25_click_diagram",
+      "action": "click",
+      "selector": "button:has-text('Diagram')",
+      "narration": "",
+      "wait_after": 1500
+    },
+    {
+      "id": "s25b_fullscreen_diagram",
+      "action": "evaluate",
+      "expression": "(() => { const s = document.createElement('style'); s.id = 'demo-fullscreen'; s.textContent = 'aside{display:none!important}header{display:none!important}main{margin-top:0!important}'; document.head.appendChild(s); const m = document.querySelector('main'); if(m&&m.parentElement) m.parentElement.style.marginLeft='0'; document.querySelectorAll('div').forEach(el => { if(!el.className||!el.className.includes) return; if(el.className.includes('bg-gradient-to-r')&&el.className.includes('from-primary')) el.style.display='none'; if(el.className.includes('h-[500px]')) el.style.height='100vh'; }); })()",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s26_view_dag",
+      "action": "screenshot",
+      "narration": "The platform orchestrates the entire resolution through this workflow — defining AI agents and business rules that received the Telegram message and routed it through the pipeline.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s26b_view_dag_detail",
+      "action": "screenshot",
+      "narration": "Each step is automated — AI classification, customer validation, ticket creation, and billing resolution — all connected as intelligent rules that run without human involvement.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s27_transition_to_crm",
+      "action": "wait",
+      "duration": 1500,
+      "narration": "Finally, let's verify the result in the CRM portal.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s28_nav_crm",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/crm-portal/tickets",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s29_wait_tickets",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "The ticket list shows all customer issues. The billing dispute ticket was created automatically during the conversation.",
+      "wait_after": 1500
+    },
+    {
+      "id": "s30_click_ticket",
+      "action": "click",
+      "selector": ".MuiDataGrid-row:first-child",
+      "narration": "",
+      "wait_after": 2500
+    },
+    {
+      "id": "s31_ticket_detail",
+      "action": "screenshot",
+      "narration": "Category, priority, customer details, and resolution status — all populated by the AI, fully auditable.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s32_scroll_conversation",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 500,
+      "narration": "The complete Telegram conversation is attached to the ticket for compliance and quality review.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s33_final",
+      "action": "screenshot",
+      "narration": "A thirty-dollar billing dispute, resolved end-to-end — from Telegram chat, through AI workflow orchestration, to a closed CRM ticket. No hold time, no transfers, no human agent needed.",
+      "wait_after": 3000
+    }
+  ]
+}

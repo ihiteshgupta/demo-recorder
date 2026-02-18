@@ -1,0 +1,134 @@
+{
+  "metadata": {
+    "title": "Customer Billing Complaint via Telegram — Multi-Turn Resolution",
+    "description": "A telecom customer reports a billing overcharge via Telegram. The AI bot gathers details through follow-up questions, validates the customer, creates a ticket, and delivers an autonomous resolution.",
+    "base_url": "file:///Users/hitesh.gupta/personal%20projects/demo-recorder/mocks",
+    "viewport": { "width": 430, "height": 932 },
+    "voice": "en-US-GuyNeural",
+    "rate": "+0%",
+    "output_name": "telegram_billing_customer"
+  },
+  "steps": [
+
+    {
+      "id": "s01_open_bot",
+      "action": "navigate",
+      "url": "/telegram_billing_mobile.html",
+      "narration": "A customer notices an unexpected charge on their bill and opens their telecom provider's AI support bot on Telegram.",
+      "wait_after": 2000
+    },
+
+    {
+      "id": "s02_focus_input_1",
+      "action": "click",
+      "selector": ".input-message-input",
+      "narration": "They start with a vague complaint — no account details, no specifics.",
+      "wait_after": 500
+    },
+    {
+      "id": "s03_type_vague_msg",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "Hi, I think I was overcharged on my last bill. The amount doesn't look right.",
+      "type_delay": 25,
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s04_send_vague_msg",
+      "action": "press",
+      "key": "Enter",
+      "narration": "The AI classifies this as a billing complaint but detects missing information — no customer ID, no amount, no billing period.",
+      "wait_after": 3500
+    },
+
+    {
+      "id": "s05_view_followup_1",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 200,
+      "narration": "Instead of rejecting the request, the bot asks targeted follow-up questions — just like a trained agent would.",
+      "wait_after": 2500
+    },
+
+    {
+      "id": "s06_focus_input_2",
+      "action": "click",
+      "selector": ".input-message-input",
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s07_type_customer_id",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "Sure, my customer ID is C005092. I was charged 1499 instead of my usual 999.",
+      "type_delay": 25,
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s08_send_customer_id",
+      "action": "press",
+      "key": "Enter",
+      "narration": "The platform validates the customer against the CRM — confirms this is Rajesh Kumar, a Gold-tier subscriber on the 999-rupee plan.",
+      "wait_after": 3500
+    },
+
+    {
+      "id": "s09_view_followup_2",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 200,
+      "narration": "The bot confirms the account and asks for one last detail — the billing month.",
+      "wait_after": 2500
+    },
+
+    {
+      "id": "s10_focus_input_3",
+      "action": "click",
+      "selector": ".input-message-input",
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s11_type_bill_month",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "It's for January 2026.",
+      "type_delay": 25,
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s12_send_bill_month",
+      "action": "press",
+      "key": "Enter",
+      "narration": "All required fields are gathered. The platform creates a trouble ticket and triggers the billing deviation analysis — comparing expected charges against the actual bill.",
+      "wait_after": 4500
+    },
+
+    {
+      "id": "s13_scroll_to_resolution",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "",
+      "wait_after": 1500
+    },
+    {
+      "id": "s14_view_resolution",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The bot delivers the resolution — a 500-rupee overcharge from an erroneous add-on has been reversed, a credit applied, and the ticket marked resolved. Three messages, zero human intervention.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s15_conclusion",
+      "action": "screenshot",
+      "narration": "Behind this simple conversation, the BlueMarble AI Platform orchestrated intent classification, multi-turn information gathering, CRM validation, ticket creation, and autonomous billing resolution — all within the customer's preferred messaging channel.",
+      "wait_after": 4000
+    }
+  ]
+}

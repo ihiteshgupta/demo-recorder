@@ -1,0 +1,197 @@
+{
+  "metadata": {
+    "title": "Telegram to CRM Ticket Workflow - End-to-End Demo",
+    "description": "Complete walkthrough of the Telegram-to-CRM ticket workflow: AI message classification, customer validation, ticket creation, and Telegram notification — all orchestrated as a DAG workflow on the BlueMarble AI Platform.",
+    "base_url": "http://localhost:8080",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "telegram_crm_workflow_demo"
+  },
+  "steps": [
+    {
+      "id": "s01_login",
+      "action": "navigate",
+      "url": "/auth/signin",
+      "narration": "Welcome to the BlueMarble Intelligence Platform. In this demo, we will walk through a complete Telegram-to-CRM ticket workflow — from receiving a customer message on Telegram, to AI classification, customer validation, CRM ticket creation, and sending a confirmation back via Telegram. Let's sign in.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s02_username",
+      "action": "type",
+      "selector": "#username",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s03_password",
+      "action": "type",
+      "selector": "#password",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s04_signin",
+      "action": "click",
+      "selector": "button:has-text('Sign In')",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s05_dashboard",
+      "action": "navigate",
+      "url": "/dashboard",
+      "narration": "This is the platform dashboard showing key metrics — agent activity, execution trends, and model usage. The BlueMarble AI Platform provides a unified interface for managing AI agents, workflows, functions, and knowledge bases.",
+      "wait_after": 4000
+    },
+
+    {
+      "id": "s10_nav_workflows",
+      "action": "navigate",
+      "url": "/workflows",
+      "narration": "Let's navigate to the Workflows page. Here we can see all orchestrated workflows in the platform. Notice the Telegram to CRM Ticket Workflow at the bottom — it has 1 agent, 6 task nodes in a DAG structure, and shows 9 successful executions from our testing.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s11_click_telegram_workflow",
+      "action": "click",
+      "selector": "a:has-text('Telegram to CRM Ticket Workflow')",
+      "narration": "Let's open the Telegram workflow to examine its configuration.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s12_overview",
+      "action": "screenshot",
+      "narration": "This is the workflow overview. It shows the workflow ID, status, version, and key statistics. The workflow has processed 9 executions with a 100% success rate. It uses 11 DAG nodes and 1 AI agent — the Message Classifier Agent — which uses a local LLM model to classify incoming Telegram messages into categories like Billing, Network, Roaming, Data, Voice, or Account issues.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s13_scroll_to_nodes",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Scrolling down, we can see the individual nodes — Start, AI Classification, Has Customer ID condition, Validate Customer, Valid Customer condition, and more. Each node in the DAG handles a specific step of the workflow logic.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s20_click_diagram",
+      "action": "click",
+      "selector": "button:has-text('Diagram')",
+      "narration": "Let's switch to the Diagram tab to see the visual DAG representation.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s21_diagram_view",
+      "action": "screenshot",
+      "narration": "Here is the complete workflow DAG. At the top is the Start node, which feeds into the AI Classification node — powered by the Message Classifier Agent. The classifier extracts the customer ID, categorizes the issue, and assigns a priority and confidence score.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s22_diagram_explain",
+      "action": "screenshot",
+      "narration": "After classification, the workflow checks if a customer ID was found. If yes, it validates the customer against the CRM system using the TMF-629 Customer Management API. If the customer is valid and classification confidence is high, a CRM ticket is created via the TMF-621 Trouble Ticket API, and a success message is sent back via Telegram. Otherwise, the workflow requests more details from the customer.",
+      "wait_after": 6000
+    },
+
+    {
+      "id": "s30_click_executions",
+      "action": "click",
+      "selector": "button:has-text('Executions')",
+      "narration": "Now let's look at the Executions tab to see the history of workflow runs. Each execution represents a customer message that was processed through the entire pipeline.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s31_click_latest_execution",
+      "action": "click",
+      "selector": "a[href*='exec_e87213c5']",
+      "narration": "Let's open the most recent execution to see exactly how the workflow processed a customer message.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s32_execution_flow",
+      "action": "screenshot",
+      "narration": "This is the execution flow visualization. Green nodes show the path that was executed, and we can see which condition branches were taken. The legend shows completed, failed, running, and skipped states. In this execution, the message was classified, customer was validated, and the workflow followed the happy path through ticket creation and success notification.",
+      "wait_after": 6000
+    },
+
+    {
+      "id": "s33_click_task_history",
+      "action": "click",
+      "selector": "button:has-text('Task History')",
+      "narration": "The Task History tab shows each executed node with its inputs and outputs. We can see the AI classification result, the CRM customer validation response, the created ticket details, and the Telegram message that was sent back to the customer.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s34_scroll_task_history",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Scrolling through the task history, we see detailed results for each step — including the full TMF-compliant JSON responses from the CRM system and the confirmation message sent via Telegram Bot API.",
+      "wait_after": 4000
+    },
+
+    {
+      "id": "s35_click_input_tab",
+      "action": "click",
+      "selector": "button:has-text('Input')",
+      "narration": "The Input tab shows the original data that triggered this execution — the chat ID, message text from the customer, and sender information. This is exactly what the Telegram bot webhook would provide when a customer sends a message.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s36_click_output_tab",
+      "action": "click",
+      "selector": "button:has-text('Output')",
+      "narration": "And the Output tab shows the final result of the entire workflow — including the created ticket ID, customer validation result, classification details, and the Telegram confirmation that was sent. This completes the full lifecycle from customer message to CRM ticket.",
+      "wait_after": 4000
+    },
+
+    {
+      "id": "s40_execute_new",
+      "action": "navigate",
+      "url": "/workflows/telegram_to_crm_ticket_workflow/execute",
+      "narration": "Now let's execute the workflow in real-time. We navigate to the Execute page where we can trigger the workflow with a simulated Telegram message.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s41_type_message",
+      "action": "type",
+      "selector": "textarea, input[type='text']",
+      "value": "My internet has been extremely slow since yesterday morning. I have tried restarting my router but nothing works. My customer ID is C005092. Please help urgently!",
+      "narration": "We enter a realistic customer complaint — a network issue with an urgent tone and a customer ID. The AI classifier will analyze this message, extract the customer ID, categorize it as a Network issue, and assign a high priority based on the urgency.",
+      "type_delay": 25,
+      "wait_after": 2000
+    },
+    {
+      "id": "s42_execute",
+      "action": "click",
+      "selector": "button:has-text('Execute')",
+      "narration": "Click Execute to trigger the workflow. The platform will now process this message through all 11 DAG nodes — classification, customer validation, ticket creation, and Telegram notification.",
+      "wait_after": 15000
+    },
+    {
+      "id": "s43_execution_result",
+      "action": "screenshot",
+      "narration": "The workflow has completed. We can see the execution result showing the path the message took through the DAG. The AI classified it correctly as a Network issue, validated customer C005092 as Rajesh Kumar with a Gold status, created a CRM trouble ticket with high priority, and sent a confirmation message back via Telegram.",
+      "wait_after": 5000
+    },
+
+    {
+      "id": "s50_navigate_back",
+      "action": "navigate",
+      "url": "/workflows/telegram_to_crm_ticket_workflow",
+      "narration": "Returning to the workflow overview, we can see the execution count has increased. The entire pipeline — from Telegram message to CRM ticket — runs in seconds, fully automated by the AI platform.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s51_conclusion",
+      "action": "screenshot",
+      "narration": "To summarize: we built a complete Telegram-to-CRM ticket workflow using the BlueMarble AI Platform. A customer message arrives via Telegram, an AI agent classifies the issue and extracts key information, the system validates the customer against the CRM, creates a TMF-compliant trouble ticket, and sends a confirmation back to the customer on Telegram — all orchestrated as a DAG workflow with intelligent conditional routing. This demonstrates how the platform enables telecom operators to automate customer service across messaging channels with AI-powered classification and TMF-standard CRM integration. Thank you for watching.",
+      "wait_after": 6000
+    }
+  ]
+}

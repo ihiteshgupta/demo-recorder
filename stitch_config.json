@@ -1,0 +1,13 @@
+{
+  "output_name": "billing_dispute_30_demo_branded",
+  "clips": [
+    "transitions/out/intro.mp4",
+    { "source": "output/chunk_0_empty_crm.mp4", "start_at": 17.0, "label": "Empty CRM Baseline" },
+    { "source": "output/chunk_1_telegram.mp4", "start_at": 15.0, "label": "Telegram Chat" },
+    "transitions/out/transition-1.mp4",
+    { "source": "output/chunk_2_platform.mp4", "start_at": 5.0, "label": "Platform Workflow" },
+    "transitions/out/transition-2.mp4",
+    { "source": "output/chunk_3_crm.mp4", "start_at": 11.0, "label": "CRM Portal" },
+    "transitions/out/outro.mp4"
+  ]
+}

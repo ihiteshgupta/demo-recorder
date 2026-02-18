@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "title": "Agent Dashboard POV - Trouble Ticket Resolution",
+    "description": "Shows the support agent's experience viewing auto-created trouble tickets with AI classification context on the Agent Dashboard.",
+    "base_url": "http://localhost:5173",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "agent_dashboard_pov"
+  },
+  "steps": [
+    {
+      "id": "s01_navigate_dashboard",
+      "action": "navigate",
+      "url": "/ai-poc/trouble-tickets",
+      "narration": "Finally, let's see the support agent's perspective. The Agent Dashboard shows all trouble tickets created by the AI platform. This is where human agents monitor and resolve customer issues.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s02_view_stats",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The dashboard summary shows key metrics at a glance: total tickets, open tickets, resolved tickets, and SLA breaches. Currently we see 1 total ticket, zero open, 1 resolved, and zero SLA breaches. The AI-powered workflow has already handled the resolution.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s03_scroll_to_tickets",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Below the summary stats, we can see the ticket list. The ticket titled Internet outage building B was automatically created by the Telegram-to-CRM workflow when the customer reported their network issue.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s04_click_ticket",
+      "action": "click",
+      "selector": "a:has-text('Internet outage building B'), tr:has-text('Internet outage building B'), [href*='1baae3e7-615d-4b25-872f-eb9c3712d287']",
+      "narration": "Let's open the ticket to see the full details.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s05_view_ticket_detail",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The ticket detail page shows all the TMF621-compliant fields. The AI platform automatically populated the ticket with the customer's complaint details, classified the issue category as a network problem, and assigned the appropriate priority level.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s06_scroll_ticket_details",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Scrolling down, we can see additional fields including the AI-generated classification context, sentiment analysis results, and the original customer message. The TMF621 standard ensures these tickets are interoperable with any telecom operations system.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s07_scroll_more",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "The ticket also includes resolution notes, timestamps, and the complete audit trail. The support agent can see exactly how the AI processed this request — from the initial Telegram message through intent classification to ticket creation — all without manual intervention.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s08_conclusion",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "This completes the three-perspective view of the BM AI Platform. The customer sent a simple Telegram message, the platform orchestrated a multi-step AI workflow, and the support agent received a fully contextualized, TMF621-compliant trouble ticket — all automated, all auditable, all in seconds.",
+      "wait_after": 4000
+    }
+  ]
+}

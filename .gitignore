@@ -26,3 +26,23 @@ Thumbs.db
 
 # Temp
 *.tmp
+
+# Node
+node_modules/
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Large media/image artifacts
+*.png
+*.jpeg
+*.jpg
+*.mp4
+*.gif
+
+# Remotion
+remotion-video/
+
+# Mocks and transitions
+mocks/
+transitions/

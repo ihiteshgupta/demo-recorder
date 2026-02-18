@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "title": "Chunk 3: CRM Portal",
+    "description": "Verify the ticket in the CRM portal",
+    "base_url": "",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_3_crm"
+  },
+  "steps": [
+    {
+      "id": "s01_transition",
+      "action": "wait",
+      "duration": 1500,
+      "narration": "Finally, let's verify the result in the CRM portal.",
+      "wait_after": 500
+    },
+    {
+      "id": "s02_nav_crm",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/crm-portal/tickets",
+      "narration": "",
+      "wait_after": 8000
+    },
+    {
+      "id": "s03_wait_tickets",
+      "action": "screenshot",
+      "narration": "The ticket list now shows the billing dispute — created automatically during the conversation.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s04_click_ticket",
+      "action": "click",
+      "selector": ".MuiDataGrid-row:first-child",
+      "narration": "",
+      "wait_after": 2500
+    },
+    {
+      "id": "s05_ticket_detail",
+      "action": "screenshot",
+      "narration": "Category, priority, customer details, and resolution — all populated by the AI, fully auditable.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s06_scroll_to_conversation",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 600,
+      "narration": "",
+      "wait_after": 1500
+    },
+    {
+      "id": "s06b_click_conversation",
+      "action": "click",
+      "selector": "button:has-text('View Conversation')",
+      "narration": "",
+      "wait_after": 4000
+    },
+    {
+      "id": "s06c_view_conversation",
+      "action": "screenshot",
+      "narration": "The complete Telegram conversation — every message, timestamp, and the AI's resolution — attached to the ticket for full compliance and quality review.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s07_final",
+      "action": "screenshot",
+      "narration": "A thirty-dollar billing dispute, resolved end-to-end — from Telegram chat, through AI workflow orchestration, to a closed CRM ticket. No hold time, no transfers, no human agent.",
+      "wait_after": 2000
+    }
+  ]
+}

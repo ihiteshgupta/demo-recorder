@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "title": "Chunk 0: Empty CRM Baseline",
+    "description": "Show empty CRM ticket list to establish a clean starting point before the demo",
+    "base_url": "",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_0_empty_crm"
+  },
+  "steps": [
+    {
+      "id": "s01_nav_backend",
+      "action": "navigate",
+      "url": "http://localhost:8010/health",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s02_cleanup",
+      "action": "evaluate",
+      "expression": "(async () => { try { await fetch('/channel-router/reset', { method: 'POST' }); } catch(e) {} try { const res = await fetch('/trouble-tickets?limit=100'); if (res.ok) { const data = await res.json(); for (const t of (data.tickets || [])) { await fetch('/trouble-tickets/' + t.id, { method: 'DELETE' }); } } } catch(e) {} })()",
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s03_nav_crm",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/crm-portal/tickets",
+      "narration": "",
+      "wait_after": 12000
+    },
+    {
+      "id": "s04_show_empty",
+      "action": "screenshot",
+      "narration": "We start with a clean CRM — no open tickets. Let's see what happens when a customer reaches out.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s05_pause",
+      "action": "wait",
+      "duration": 1500,
+      "narration": "",
+      "wait_after": 0
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "title": "Phase 1: Cases + Rules Demo",
+    "description": "Walkthrough of Case Types, Rules, Cases, and Review Queue features",
+    "base_url": "http://localhost:8080",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "cases_rules_demo"
+  },
+  "steps": [
+    {
+      "id": "login_page",
+      "action": "navigate",
+      "url": "/auth/signin",
+      "narration": "Welcome to the BlueMarble Intelligence Platform. Let's start by signing in.",
+      "wait_after": 2000
+    },
+    {
+      "id": "login_username",
+      "action": "type",
+      "selector": "#username",
+      "value": "admin",
+      "narration": "We'll sign in with the admin account.",
+      "type_delay": 60,
+      "wait_after": 500
+    },
+    {
+      "id": "login_password",
+      "action": "type",
+      "selector": "#password",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 60,
+      "wait_after": 500
+    },
+    {
+      "id": "login_submit",
+      "action": "click",
+      "selector": "button:has-text('Sign In')",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "nav_case_types",
+      "action": "navigate",
+      "url": "/case-types",
+      "narration": "Let's start with Case Types. This is where we define the schema for different kinds of cases, like billing disputes or service complaints.",
+      "wait_after": 3000
+    },
+    {
+      "id": "case_types_overview",
+      "action": "screenshot",
+      "narration": "Here we can see the Billing Dispute case type. It defines the schema for billing dispute cases.",
+      "wait_after": 3000
+    },
+    {
+      "id": "case_type_detail",
+      "action": "navigate",
+      "url": "/case-types/casetype_ec0b201c",
+      "narration": "Let's view the details. Each case type defines its fields, SLA configuration, and a case number prefix. This billing dispute type has five fields including customer ID, dispute amount, reason, and transaction date.",
+      "wait_after": 3000
+    },
+    {
+      "id": "case_type_scroll",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "The SLA configuration sets response time to thirty minutes, resolution time to twelve hours, and auto-escalation after four hours.",
+      "wait_after": 3000
+    },
+    {
+      "id": "nav_rules",
+      "action": "navigate",
+      "url": "/rules",
+      "narration": "Now let's look at the Rules page. Rules define the business logic for routing and resolving cases automatically.",
+      "wait_after": 3000
+    },
+    {
+      "id": "rules_overview",
+      "action": "screenshot",
+      "narration": "Here's our Auto-Resolve Small Overcharges rule.",
+      "wait_after": 2000
+    },
+    {
+      "id": "rule_detail",
+      "action": "navigate",
+      "url": "/rules/rule_3f47f6c7",
+      "narration": "Let's see the conditions in detail.",
+      "wait_after": 3000
+    },
+    {
+      "id": "rule_scroll",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "This rule has three conditions. Small overcharges under fifty dollars are auto-resolved. High-value disputes over five hundred dollars are escalated to a manager. And unauthorized charges go to the fraud team. Anything else falls through to the default action, which assigns it to the billing team queue.",
+      "wait_after": 4000
+    },
+    {
+      "id": "nav_cases",
+      "action": "navigate",
+      "url": "/cases",
+      "narration": "Now let's see the Cases page. These are actual case instances that have been created and processed.",
+      "wait_after": 3000
+    },
+    {
+      "id": "cases_overview",
+      "action": "screenshot",
+      "narration": "We have three cases. B D twenty-twenty-six zero zero zero one was a thirty dollar overcharge that was auto-resolved. Zero zero zero two is a seven hundred fifty dollar duplicate charge that was escalated. And zero zero zero three was an unauthorized charge that was resolved by a human agent after investigation.",
+      "wait_after": 5000
+    },
+    {
+      "id": "case_detail",
+      "action": "navigate",
+      "url": "/cases/case_530ba97ac2a6",
+      "narration": "Let's look at the detail view for the unauthorized charge case.",
+      "wait_after": 3000
+    },
+    {
+      "id": "case_detail_scroll",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "The case detail shows the full audit trail. Every action is tracked — creation, escalation, assignment, investigator notes, and final resolution. This complete history is critical for compliance and review.",
+      "wait_after": 4000
+    },
+    {
+      "id": "nav_review_queue",
+      "action": "navigate",
+      "url": "/review-queue",
+      "narration": "Finally, let's visit the Review Queue. This is where escalated cases land for human review.",
+      "wait_after": 3000
+    },
+    {
+      "id": "review_queue_overview",
+      "action": "screenshot",
+      "narration": "The review queue shows cases sorted by priority with SLA countdown timers. Reviewers can claim cases, add investigation notes, and resolve them. This gives the operations team a clear view of what needs attention.",
+      "wait_after": 4000
+    },
+    {
+      "id": "closing",
+      "action": "navigate",
+      "url": "/cases",
+      "narration": "That concludes Phase 1 of the User-Query Journey. We've delivered case types with configurable schemas and SLA tracking, a rule engine with first-match-wins evaluation, full case lifecycle management with audit trails, and a review queue for escalated cases. Twenty-three new MCP methods power the entire feature. Thank you for watching.",
+      "wait_after": 5000
+    }
+  ]
+}

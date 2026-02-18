@@ -24,7 +24,7 @@ async def execute_action(page: Page, step: Step, base_url: str) -> None:
 
     if action == ActionType.NAVIGATE:
         url = step.url
-        if url and not url.startswith(("http://", "https://")):
+        if url and not url.startswith(("http://", "https://", "file://")):
             url = base_url.rstrip("/") + "/" + url.lstrip("/")
         await page.goto(url, wait_until="load")
 
@@ -40,6 +40,9 @@ async def execute_action(page: Page, step: Step, base_url: str) -> None:
         await page.wait_for_selector(step.selector, state="visible", timeout=15000)
         await page.fill(step.selector, "")  # Clear first
         await page.type(step.selector, step.value, delay=step.type_delay)
+
+    elif action == ActionType.PRESS:
+        await page.keyboard.press(step.key)
 
     elif action == ActionType.SCROLL:
         if step.selector:
@@ -59,6 +62,9 @@ async def execute_action(page: Page, step: Step, base_url: str) -> None:
 
     elif action == ActionType.WAIT:
         await page.wait_for_timeout(step.duration)
+
+    elif action == ActionType.EVALUATE:
+        await page.evaluate(step.expression)
 
     elif action == ActionType.SCREENSHOT:
         pass  # Video is already recording; screenshot is a marker
@@ -88,11 +94,14 @@ async def record_demo(
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
-        context = await browser.new_context(
-            viewport=viewport,
-            record_video_dir=str(video_dir),
-            record_video_size=viewport,
-        )
+        context_opts = {
+            "viewport": viewport,
+            "record_video_dir": str(video_dir),
+            "record_video_size": viewport,
+        }
+        if script.metadata.storage_state:
+            context_opts["storage_state"] = script.metadata.storage_state
+        context = await browser.new_context(**context_opts)
         page = await context.new_page()
 
         # Wall-clock reference for accurate video timeline tracking

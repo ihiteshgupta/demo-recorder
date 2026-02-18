@@ -101,6 +101,93 @@ def preflight() -> None:
     sys.exit(0 if ok else 1)
 
 
+@main.command("save-auth")
+@click.argument("url", default="https://web.telegram.org/k/")
+@click.option("--output", "-o", type=click.Path(), default="./auth_state.json", help="Where to save auth state.")
+@click.option("--viewport", type=(int, int), default=(1920, 1080), help="Browser viewport width height.")
+def save_auth(url: str, output: str, viewport: tuple[int, int]) -> None:
+    """Open a browser to log in, then save auth state for demo recording.
+
+    Usage: demo-recorder save-auth https://web.telegram.org/k/ -o telegram_auth.json
+    """
+    async def _run() -> None:
+        from playwright.async_api import async_playwright
+
+        console.print(f"[bold]Opening browser:[/bold] {url}")
+        console.print("[dim]Log in, then close the browser window to save auth state.[/dim]\n")
+
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(headless=False)
+            context = await browser.new_context(
+                viewport={"width": viewport[0], "height": viewport[1]},
+            )
+            page = await context.new_page()
+            await page.goto(url, wait_until="load")
+
+            # Wait for the user to close the browser
+            try:
+                await page.wait_for_event("close", timeout=600_000)  # 10 min
+            except Exception:
+                pass
+
+            # Save storage state
+            state_path = Path(output).resolve()
+            await context.storage_state(path=str(state_path))
+            await browser.close()
+
+        console.print(f"\n[green]Auth state saved:[/green] {state_path}")
+        console.print(f'[dim]Use in script metadata: "storage_state": "{state_path}"[/dim]')
+
+    asyncio.run(_run())
+
+
+@main.command()
+@click.argument("config_file", type=click.Path(exists=True))
+@click.argument("source_video", type=click.Path(exists=True), required=False, default=None)
+@click.option("--output", "-o", type=click.Path(), default="./output", help="Output directory.")
+@click.option("--base-dir", type=click.Path(exists=True), default=None, help="Base dir for resolving clip paths.")
+def stitch(config_file: str, source_video: str | None, output: str, base_dir: str | None) -> None:
+    """Stitch clips into a final branded demo video.
+
+    Clips mode:   demo-recorder stitch stitch_config.json -o output/
+    Legacy mode:  demo-recorder stitch stitch_config.json output/demo.mp4 -o output/
+    """
+    config_path = Path(config_file)
+    with open(config_path) as f:
+        config = json.load(f)
+
+    try:
+        if "clips" in config:
+            from .stitch import stitch_clips
+
+            console.print("[bold]Stitching clips in sequence[/bold]\n")
+            result = stitch_clips(
+                config_path=config_path,
+                output_dir=Path(output),
+                base_dir=Path(base_dir) if base_dir else None,
+            )
+        else:
+            from .stitch import stitch_video
+
+            if not source_video:
+                console.print("[red]Error:[/red] Legacy mode requires a source video argument")
+                sys.exit(1)
+            console.print("[bold]Stitching branded transitions[/bold]\n")
+            result = stitch_video(
+                source_path=Path(source_video),
+                config_path=config_path,
+                output_dir=Path(output),
+                base_dir=Path(base_dir) if base_dir else None,
+            )
+        console.print(f"\n[green]Output:[/green] {result}")
+    except (FileNotFoundError, ValueError) as e:
+        console.print(f"[red]Error:[/red] {e}")
+        sys.exit(1)
+    except RuntimeError as e:
+        console.print(f"[red]ffmpeg error:[/red] {e}")
+        sys.exit(1)
+
+
 @main.command()
 @click.argument("output_path", type=click.Path(), default="demo_script.json")
 def init(output_path: str) -> None:

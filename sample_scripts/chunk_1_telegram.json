@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "title": "Chunk 1: Telegram Chat",
+    "description": "Customer interacts with AI support bot on Telegram",
+    "base_url": "",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_1_telegram",
+    "storage_state": "/Users/hitesh.gupta/office-projects/demo-recorder/telegram_auth.json"
+  },
+  "steps": [
+    {
+      "id": "s00a_nav_backend",
+      "action": "navigate",
+      "url": "http://localhost:8010/health",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s00b_cleanup",
+      "action": "evaluate",
+      "expression": "(async () => { try { await fetch('/channel-router/reset', { method: 'POST' }); } catch(e) {} try { const res = await fetch('/trouble-tickets?limit=100'); if (res.ok) { const data = await res.json(); for (const t of (data.tickets || [])) { await fetch('/trouble-tickets/' + t.id, { method: 'DELETE' }); } } } catch(e) {} })()",
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s01_open_telegram",
+      "action": "navigate",
+      "url": "https://web.telegram.org/k/#@bluemarble_support_bot",
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s02_wait_and_clean",
+      "action": "wait",
+      "duration": 4000,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s03_hide_sidebar",
+      "action": "evaluate",
+      "expression": "(() => { const s = document.createElement('style'); s.id = 'demo-styles'; s.textContent = '.sidebar-left, .chatlist-container { display: none !important; } #column-center { margin-left: 0 !important; } .chat { left: 0 !important; } .demo-hide-old { display: none !important; } .date-group-title { display: none !important; } .bubbles-inner > .service { display: none !important; } .bot-button, .chat-input-control-button { display: none !important; } .reply-markup { display: none !important; }'; document.head.appendChild(s); let maxMid = 0; document.querySelectorAll('[data-mid]').forEach(el => { const mid = parseInt(el.dataset.mid); if (mid > maxMid) maxMid = mid; }); window.__demoCutoffMid = maxMid; document.querySelectorAll('.bubble').forEach(b => b.classList.add('demo-hide-old')); const hideOld = () => { document.querySelectorAll('.bubble:not(.demo-checked)').forEach(b => { b.classList.add('demo-checked'); const mid = parseInt(b.dataset.mid); if (!isNaN(mid) && mid <= window.__demoCutoffMid) b.classList.add('demo-hide-old'); }); }; const observer = new MutationObserver(hideOld); observer.observe(document.querySelector('.bubbles-inner') || document.body, { childList: true, subtree: true }); const ti = document.querySelector('.chat-info .peer-title') || document.querySelector('.top .user-title'); if (ti) ti.textContent = 'Priya Sharma'; })()",
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s04_narrate_intro",
+      "action": "wait",
+      "duration": 500,
+      "narration": "A customer notices an unexpected charge on their bill. They open Telegram and message their provider's support bot.",
+      "wait_after": 1500
+    },
+    {
+      "id": "s05_focus_1",
+      "action": "evaluate",
+      "expression": "document.querySelector('.input-message-input').focus()",
+      "narration": "",
+      "wait_after": 300
+    },
+    {
+      "id": "s06_type_complaint",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "Hi, I noticed my bill this month is $30 higher than usual. Can you help me understand why?",
+      "type_delay": 30,
+      "narration": "No hold music, no IVR menus — just a simple chat message to start.",
+      "wait_after": 500
+    },
+    {
+      "id": "s07_send_complaint",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 18000
+    },
+    {
+      "id": "s08_scroll_reply_1",
+      "action": "evaluate",
+      "expression": "(() => { const el = document.querySelector('.bubbles-inner'); if (el) el.scrollTop = el.scrollHeight; document.querySelectorAll('.scrollable, .scrollable-y').forEach(e => { e.scrollTop = e.scrollHeight; }); })()",
+      "narration": "The AI classifies this as a billing complaint and responds with a targeted follow-up.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s09_focus_2",
+      "action": "evaluate",
+      "expression": "document.querySelector('.input-message-input').focus()",
+      "narration": "",
+      "wait_after": 300
+    },
+    {
+      "id": "s10_type_details",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "My customer ID is C006064. The bill is for January 2026 and I normally pay around $599 but this month it's $629.",
+      "type_delay": 25,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s11_send_details",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s12_narrate_while_waiting",
+      "action": "wait",
+      "duration": 20000,
+      "narration": "Behind the scenes, the platform validates the customer against the CRM, creates a trouble ticket, and triggers the billing analysis engine.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s13_scroll_resolution",
+      "action": "evaluate",
+      "expression": "(() => { const el = document.querySelector('.bubbles-inner'); if (el) el.scrollTop = el.scrollHeight; document.querySelectorAll('.scrollable, .scrollable-y').forEach(e => { e.scrollTop = e.scrollHeight; }); })()",
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s14_scroll_again",
+      "action": "evaluate",
+      "expression": "(() => { const el = document.querySelector('.bubbles-inner'); if (el) el.scrollTop = el.scrollHeight; document.querySelectorAll('.scrollable, .scrollable-y').forEach(e => { e.scrollTop = e.scrollHeight; }); })()",
+      "narration": "The AI explains the root cause, applies the resolution, and closes the ticket — two exchanges, zero human intervention.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s15_end",
+      "action": "wait",
+      "duration": 1500,
+      "narration": "Now let's look behind the scenes at how the AI platform orchestrated this.",
+      "wait_after": 1500
+    }
+  ]
+}

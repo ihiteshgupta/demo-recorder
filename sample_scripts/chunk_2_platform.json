@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "title": "Chunk 2: Platform Workflow",
+    "description": "Show the Channel AI Support workflow diagram — slow pan from start to end",
+    "base_url": "http://localhost:5173",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_2_platform"
+  },
+  "steps": [
+    {
+      "id": "s01_nav_workflow_demo",
+      "action": "navigate",
+      "url": "/ai-poc/workflow-demo",
+      "narration": "",
+      "wait_after": 2500
+    },
+    {
+      "id": "s02_wait_reactflow_render",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "",
+      "wait_after": 0
+    },
+    {
+      "id": "s03_zoom_to_start",
+      "action": "evaluate",
+      "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'none'; vp.style.transform = 'translate(100px, -50px) scale(1.6)'; } })()",
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s04_narrate_overview",
+      "action": "screenshot",
+      "narration": "The platform orchestrates the entire resolution through an intelligent workflow. Let's follow the path from start to finish.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s05_pan_to_classify",
+      "action": "evaluate",
+      "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'transform 5s linear'; vp.style.transform = 'translate(-600px, -100px) scale(1.6)'; } })()",
+      "narration": "AI agents handle classification — detecting the billing complaint and extracting key details from the customer's message.",
+      "wait_after": 6000
+    },
+    {
+      "id": "s06_pan_to_validate",
+      "action": "evaluate",
+      "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'transform 5s linear'; vp.style.transform = 'translate(-1400px, -200px) scale(1.6)'; } })()",
+      "narration": "The workflow validates the customer against the CRM, creates a trouble ticket following TMF621 standards, and triggers billing analysis.",
+      "wait_after": 6000
+    },
+    {
+      "id": "s07_pan_to_resolution",
+      "action": "evaluate",
+      "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'transform 5s linear'; vp.style.transform = 'translate(-2400px, -200px) scale(1.6)'; } })()",
+      "narration": "Finally, the resolution engine determines the root cause, applies the fix, and closes the ticket — all automated, all auditable.",
+      "wait_after": 6000
+    },
+    {
+      "id": "s08_pause_end",
+      "action": "wait",
+      "duration": 1500,
+      "narration": "",
+      "wait_after": 0
+    }
+  ]
+}

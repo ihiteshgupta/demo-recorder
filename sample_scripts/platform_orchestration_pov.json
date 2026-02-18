@@ -1,0 +1,139 @@
+{
+  "metadata": {
+    "title": "Platform Orchestration POV - Workflow Processing Pipeline",
+    "description": "Demonstrates the BM AI Platform's orchestration capabilities: workflow configuration, DAG visualization, execution monitoring, and detailed execution tracing.",
+    "base_url": "http://localhost:8080",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "platform_orchestration_pov"
+  },
+  "steps": [
+    {
+      "id": "s01_login_page",
+      "action": "navigate",
+      "url": "/auth/signin",
+      "narration": "Now let's look at the orchestration layer. We sign into the BM AI Platform to see how the workflow processes customer requests.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s02_enter_username",
+      "action": "type",
+      "selector": "#username",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s03_enter_password",
+      "action": "type",
+      "selector": "#password",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s04_click_signin",
+      "action": "click",
+      "selector": "button:has-text('Sign In')",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s05_dashboard",
+      "action": "navigate",
+      "url": "/dashboard",
+      "narration": "This is the platform dashboard. It provides a high-level overview of agent activity, execution trends, and system health. From here, platform operators can monitor all AI workflows in real time.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s06_nav_workflows",
+      "action": "navigate",
+      "url": "/workflows",
+      "narration": "Let's navigate to the Workflows page. Here we can see all configured workflows. The Telegram to CRM Ticket Workflow is the one that processed our customer's complaint.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s07_click_workflow",
+      "action": "click",
+      "selector": "a:has-text('Telegram to CRM Ticket Workflow')",
+      "narration": "We open the Telegram to CRM Ticket Workflow to inspect its configuration and execution history.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s08_overview_tab",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "The Overview tab shows key metrics: this workflow has been executed 9 times with a 100 percent success rate. It processes messages through an 11-node directed acyclic graph that handles intent classification, ticket creation, and response generation.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s09_click_diagram_tab",
+      "action": "click",
+      "selector": "button:has-text('Diagram')",
+      "narration": "The Diagram tab visualizes the complete workflow as a directed acyclic graph. Each node represents a processing step.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s10_view_diagram",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The workflow starts with message reception, then classifies the customer's intent using an AI agent. Based on the classification, it routes to the appropriate handler. For network issues, it creates a TMF621-compliant trouble ticket, assigns priority based on sentiment analysis, and generates a customer response. All eleven nodes execute in sequence with conditional branching.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s11_scroll_diagram",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s12_click_executions_tab",
+      "action": "click",
+      "selector": "button:has-text('Executions')",
+      "narration": "The Executions tab shows every run of this workflow. Let's look at the most recent execution to see exactly how the customer's complaint was processed.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s13_click_latest_execution",
+      "action": "navigate",
+      "url": "/workflows/executions/exec_e87213c5",
+      "narration": "This is the detailed execution view for the most recent run. The flow visualization shows the path the request took through the workflow, with green indicating successfully completed nodes.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s14_view_execution_flow",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "We can see the complete execution path: the message was received, intent was classified as a network issue with high confidence, a TMF621 trouble ticket was created with appropriate priority, and a customer-friendly response was generated. Each step shows its execution time and status.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s15_scroll_to_history",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Scrolling down to the Task History section, we can see the detailed step-by-step execution log.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s16_view_task_history",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The Task History shows each node's input and output. This is invaluable for debugging and auditing. Platform operators can trace exactly how each customer request was processed, what decisions the AI made, and what actions were taken.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s17_scroll_to_output",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Finally, the Output section shows the complete workflow result — the generated trouble ticket ID, the customer response text, and all metadata. This demonstrates the BM AI Platform's end-to-end orchestration: from a simple Telegram message to a fully tracked, auditable workflow execution.",
+      "wait_after": 4000
+    }
+  ]
+}

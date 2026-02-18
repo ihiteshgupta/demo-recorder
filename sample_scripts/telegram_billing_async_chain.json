@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "title": "Telegram Billing Complaint - Async Workflow Chain Demo",
+    "description": "A customer sends a billing complaint via Telegram. The message flows through the fire-and-forget async chain: Channel Digestion → Classifier/Router → Billing Resolution, resolving autonomously.",
+    "base_url": "https://web.telegram.org",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "telegram_billing_async_chain",
+    "storage_state": "./telegram_auth.json"
+  },
+  "steps": [
+    {
+      "id": "s01_open_telegram",
+      "action": "navigate",
+      "url": "https://web.telegram.org/k/#@bm_ai_tickets_bot",
+      "narration": "Let's walk through a billing complaint resolution using the Telegram support bot, powered by the BlueMarble AI Platform's fire-and-forget async workflow chain.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s02_wait_for_chat",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The customer opens the BM AI Tickets bot on Telegram Web. The chat loads and is ready for interaction.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s03_click_input",
+      "action": "click",
+      "selector": ".input-message-input",
+      "narration": "Now the customer will type their billing complaint.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s04_type_complaint",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "Hi, I was overcharged on my last bill. I was billed 1499 rupees instead of the usual 999 for my monthly plan. My customer ID is C005092 and MSISDN is 919876543210. This is for the January 2026 billing cycle. Please investigate and fix this.",
+      "type_delay": 30,
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s05_send_message",
+      "action": "press",
+      "key": "Enter",
+      "narration": "The customer sends the message. Behind the scenes, three independent workflows will process this complaint asynchronously — each completing its part and triggering the next.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s06_wait_digestion",
+      "action": "wait",
+      "duration": 15000,
+      "narration": "Stage one: the Channel Digestion workflow receives the message. It detects the intent as a complaint, classifies it as a billing issue, validates customer C005092, extracts billing-specific fields like the bill month and disputed amount, and creates a TMF-621 trouble ticket. It then fires off the Classifier Router asynchronously and exits.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s07_wait_classifier",
+      "action": "wait",
+      "duration": 8000,
+      "narration": "Stage two: the Classifier Router receives the ticket context, identifies this as a billing complaint, and triggers the Billing Resolution workflow asynchronously. The classifier itself exits immediately after dispatching.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s08_wait_resolution",
+      "action": "wait",
+      "duration": 20000,
+      "narration": "Stage three: the Billing Deviation Analysis workflow takes over. It examines the customer's billing history, compares expected charges against actual charges, identifies the overcharge discrepancy, and determines the appropriate resolution. Once resolved, it sends the result back through the Telegram channel and updates the ticket status automatically.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s09_scroll_to_response",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 500,
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s10_view_response",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The resolution has been delivered to the customer. The bot responded with the billing analysis results and the corrective action taken — all handled autonomously.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s11_conclusion",
+      "action": "screenshot",
+      "narration": "The entire flow — from customer message to billing analysis to resolution — was processed through three independent workflows running as an async chain. Each workflow did its part, triggered the next, and exited. No workflow waited on another. The ticket was the anchor carrying context across the chain. This is the power of fire-and-forget async orchestration on the BlueMarble AI Platform.",
+      "wait_after": 5000
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+{
+  "metadata": {
+    "title": "Full Async Billing Chain Demo — All Perspectives",
+    "description": "Complete walkthrough of the async billing workflow chain from 4 perspectives: Customer (Telegram), Platform (BM AI), Agent (Ticketing Dashboard), and CRM. A customer complaint flows through Channel Digestion → Classifier → Billing Resolution, resolving autonomously.",
+    "base_url": "http://localhost:8080",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "async_billing_chain_full_demo",
+    "storage_state": "./telegram_auth.json"
+  },
+  "steps": [
+
+    {
+      "id": "s01_login_page",
+      "action": "navigate",
+      "url": "/auth/signin",
+      "narration": "Welcome to the BlueMarble AI Platform. Let's walk through a complete billing complaint resolution, from customer message to autonomous resolution, across four perspectives. First, we sign in.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s02_enter_username",
+      "action": "type",
+      "selector": "#username",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s03_enter_password",
+      "action": "type",
+      "selector": "#password",
+      "value": "admin",
+      "narration": "",
+      "type_delay": 80,
+      "wait_after": 300
+    },
+    {
+      "id": "s04_click_signin",
+      "action": "click",
+      "selector": "button:has-text('Sign In')",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s05_view_dashboard",
+      "action": "navigate",
+      "url": "/dashboard",
+      "narration": "This is the platform dashboard, providing a high-level overview of agent activity, execution trends, and system health.",
+      "wait_after": 4000
+    },
+
+    {
+      "id": "s06_nav_workflows",
+      "action": "navigate",
+      "url": "/workflows",
+      "narration": "On the Workflows page, notice the three workflows that form our async chain: Channel Digestion, Classifier Router, and Billing Deviation Resolution. Each runs independently in a fire-and-forget pattern.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s07_click_channel_workflow",
+      "action": "click",
+      "selector": "a:has-text('Channel Digestion Workflow')",
+      "narration": "Let's open the Channel Digestion workflow — the entry point of the chain.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s08_click_diagram_tab",
+      "action": "click",
+      "selector": "button:has-text('Diagram')",
+      "narration": "The Diagram tab visualizes the workflow as a directed acyclic graph.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s09_view_diagram",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "Here's the DAG structure. The workflow classifies the customer's intent, validates their identity, extracts billing-specific fields, creates a TMF-621 trouble ticket, and then triggers the next workflow in the chain asynchronously — before exiting itself.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s10_scroll_diagram",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "Each node is a discrete processing step. The final node fires off the Classifier Router workflow and immediately returns. No blocking. No waiting.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s11_open_telegram",
+      "action": "navigate",
+      "url": "https://web.telegram.org/k/#@bm_ai_tickets_bot",
+      "narration": "Now let's switch to the customer's perspective. We open the BM AI Tickets bot on Telegram Web.",
+      "wait_after": 8000
+    },
+    {
+      "id": "s12_wait_chat_load",
+      "action": "wait",
+      "duration": 5000,
+      "narration": "The chat loads. The customer is ready to report a billing issue.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s13_click_input",
+      "action": "click",
+      "selector": ".input-message-input",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s14_type_complaint",
+      "action": "type",
+      "selector": ".input-message-input",
+      "value": "Hi, I was overcharged on my last bill. I was billed 1499 rupees instead of the usual 999 for my monthly plan. My customer ID is C006065 and MSISDN is 919876543210. This is for the January 2026 billing cycle. Please investigate and fix this.",
+      "type_delay": 30,
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s15_send_message",
+      "action": "press",
+      "key": "Enter",
+      "narration": "The customer sends the complaint. Behind the scenes, three independent workflows will now process this asynchronously, each completing its part and triggering the next.",
+      "wait_after": 5000
+    },
+
+    {
+      "id": "s16_wait_digestion",
+      "action": "wait",
+      "duration": 12000,
+      "narration": "Stage one: the Channel Digestion workflow receives the Telegram message. It classifies the intent as a billing complaint, validates customer C006065 against the CRM, extracts billing fields like the disputed amount and bill month, creates a TMF-621 trouble ticket, and fires off the Classifier Router asynchronously.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s17_wait_classifier",
+      "action": "wait",
+      "duration": 8000,
+      "narration": "Stage two: the Classifier Router picks up the ticket context, identifies this as a billing issue, and triggers the Billing Deviation Analysis workflow. The classifier itself exits immediately after dispatching.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s18_wait_resolution",
+      "action": "wait",
+      "duration": 15000,
+      "narration": "Stage three: the Billing Deviation Analysis workflow takes over. It examines the customer's billing history, compares expected versus actual charges, identifies the overcharge, determines the resolution, sends the result back through Telegram, and updates the ticket status — all autonomously.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s19_scroll_to_response",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 500,
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s20_view_bot_response",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The bot has responded with the resolution. The customer sees the billing analysis and corrective action — no human intervention was needed.",
+      "wait_after": 4000
+    },
+
+    {
+      "id": "s21_nav_platform_workflow",
+      "action": "navigate",
+      "url": "http://localhost:8080/workflows/channel_ai_support_workflow",
+      "narration": "Back to the platform. Let's trace the execution that just happened.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s22_click_executions_tab",
+      "action": "click",
+      "selector": "button:has-text('Executions')",
+      "narration": "The Executions tab shows every run of this workflow. The most recent entry is the one triggered by our Telegram complaint.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s23_click_latest_execution",
+      "action": "click",
+      "selector": "div.space-y-3 > a:first-child",
+      "narration": "Let's open the latest execution to inspect the processing details.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s24_view_execution_flow",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The execution flow visualization shows all completed nodes in green. The request was received, classified, validated, a ticket was created, and the next workflow was triggered — every step succeeded.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s25_click_task_history",
+      "action": "click",
+      "selector": "button:has-text('Task History')",
+      "narration": "The Task History tab lets us trace the data flowing through each node — invaluable for debugging and auditing.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s26_scroll_task_history",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Scrolling through, we can see the inputs and outputs of each task. The AI's classification decisions, extracted fields, and generated ticket data are all fully traceable.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s27_nav_ticketing_dashboard",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/ticketing-dashboard/",
+      "narration": "Now the agent's perspective. The Ticketing Dashboard shows all trouble tickets created by the AI platform.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s28_view_dashboard_kpis",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The dashboard summary shows key metrics: total tickets, open and resolved counts, and SLA status. The AI-powered workflow has already handled the resolution without any human intervention.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s29_nav_tickets_list",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/ticketing-dashboard/tickets",
+      "narration": "On the Tickets page, we can see all tickets in the system.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s30_click_latest_ticket",
+      "action": "click",
+      "selector": ".MuiDataGrid-row:first-child",
+      "narration": "Let's open the most recent billing ticket — the one just created by our async workflow chain.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s31_view_ticket_detail",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The ticket detail page shows the TMF-621-compliant fields: description, category, priority, and customer metadata. All populated automatically by the AI workflow.",
+      "wait_after": 2000
+    },
+    {
+      "id": "s32_scroll_to_conversation",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "Scrolling down, the conversation timeline shows the customer's original message and the AI's resolution response. The workflow execution flows are displayed inline, showing exactly how the complaint was processed.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s33_scroll_to_insights",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "The AI Insights panel shows sentiment analysis, intent classification confidence, and extracted entities. The activity timeline provides a complete audit trail from ticket creation through resolution.",
+      "wait_after": 3000
+    },
+
+    {
+      "id": "s34_nav_crm",
+      "action": "navigate",
+      "url": "https://bm-demo5.comviva.com",
+      "narration": "Finally, the CRM perspective. The trouble ticket has been synchronized to the enterprise CRM portal, giving the operations team full visibility.",
+      "wait_after": 5000
+    },
+    {
+      "id": "s35_view_crm_ticket",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "The CRM shows the same ticket with enterprise context — customer profile, account history, and the AI-generated resolution. This completes the four-perspective view.",
+      "wait_after": 4000
+    },
+
+    {
+      "id": "s36_nav_back_workflows",
+      "action": "navigate",
+      "url": "http://localhost:8080/workflows",
+      "narration": "Let's return to the platform for a final summary.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s37_closing",
+      "action": "screenshot",
+      "narration": "In under a minute, three independent workflows processed a customer complaint end-to-end. Channel Digestion received and classified the message. The Classifier routed it to the right resolver. And Billing Resolution analyzed, resolved, and responded — all autonomously. Each workflow fired the next and exited. No workflow waited on another. The trouble ticket was the anchor carrying context across the entire chain. This is fire-and-forget async orchestration on the BlueMarble AI Platform.",
+      "wait_after": 6000
+    }
+  ]
+}

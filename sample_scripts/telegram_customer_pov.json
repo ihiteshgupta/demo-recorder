@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "title": "Telegram Customer POV - Network Complaint via Bot",
+    "description": "A customer reaches out via Telegram to report slow internet, demonstrating the end-user experience of the AI-powered support bot.",
+    "base_url": "file:///tmp",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "telegram_customer_pov"
+  },
+  "steps": [
+    {
+      "id": "s01_open_telegram",
+      "action": "navigate",
+      "url": "file:///tmp/telegram_mock.html",
+      "narration": "Let's see the experience from the customer's perspective. The customer opens Telegram Web to contact their telecom provider's support bot.",
+      "wait_after": 4000
+    },
+    {
+      "id": "s02_wait_for_load",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s03_search_bot",
+      "action": "click",
+      "selector": "#telegram-search-input",
+      "narration": "The customer searches for the support bot in their chat list.",
+      "wait_after": 1500
+    },
+    {
+      "id": "s04_type_search",
+      "action": "type",
+      "selector": "#telegram-search-input",
+      "value": "BM AI",
+      "narration": "",
+      "type_delay": 120,
+      "wait_after": 2000
+    },
+    {
+      "id": "s05_click_bot_chat",
+      "action": "click",
+      "selector": "#searchResultBot",
+      "narration": "The customer selects the BM AI support bot from the search results.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s06_focus_message_input",
+      "action": "click",
+      "selector": "#message-input",
+      "narration": "Now the customer types their complaint. They are experiencing slow internet and have already tried basic troubleshooting.",
+      "wait_after": 1000
+    },
+    {
+      "id": "s07_type_complaint",
+      "action": "type",
+      "selector": "#message-input",
+      "value": "Hi, my internet has been extremely slow since yesterday. I've restarted my router multiple times but nothing works. My customer ID is C005092. Please fix this urgently!",
+      "type_delay": 40,
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s08_send_message",
+      "action": "click",
+      "selector": "#sendButton",
+      "narration": "The customer sends the message and waits for a response from the AI-powered bot.",
+      "wait_after": 10000
+    },
+    {
+      "id": "s09_view_response",
+      "action": "wait",
+      "duration": 5000,
+      "narration": "The bot processes the message through the BM AI Platform's Telegram-to-CRM workflow. Behind the scenes, the platform classifies the intent as a network issue, creates a TMF621 trouble ticket, and generates an appropriate response. The customer receives a confirmation that their issue has been logged and is being addressed.",
+      "wait_after": 3000
+    },
+    {
+      "id": "s10_scroll_response",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 300,
+      "narration": "From the customer's perspective, this was a simple chat interaction. But behind the scenes, the AI platform orchestrated intent classification, ticket creation, and response generation — all in seconds. This is the power of the BM AI Platform's workflow automation.",
+      "wait_after": 3000
+    }
+  ]
+}

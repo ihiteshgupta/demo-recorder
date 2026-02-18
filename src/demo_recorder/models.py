@@ -10,11 +10,13 @@ class ActionType(str, Enum):
     NAVIGATE = "navigate"
     CLICK = "click"
     TYPE = "type"
+    PRESS = "press"
     SCROLL = "scroll"
     HOVER = "hover"
     SELECT = "select"
     WAIT = "wait"
     SCREENSHOT = "screenshot"
+    EVALUATE = "evaluate"
 
 
 class Viewport(BaseModel):
@@ -30,6 +32,7 @@ class Metadata(BaseModel):
     voice: str = "en-US-AriaNeural"
     rate: str = "+0%"
     output_name: str = "demo"
+    storage_state: Optional[str] = None  # Path to Playwright storage state JSON
 
 
 class Step(BaseModel):
@@ -47,12 +50,18 @@ class Step(BaseModel):
     value: Optional[str] = None
     type_delay: int = 50
 
+    # press
+    key: Optional[str] = None  # e.g. "Enter", "Escape", "Tab"
+
     # scroll
     direction: Optional[str] = None  # "up" | "down"
     amount: Optional[int] = None
 
     # wait
     duration: Optional[int] = None  # ms
+
+    # evaluate
+    expression: Optional[str] = None  # JavaScript expression to evaluate
 
     # common
     wait_after: int = 500  # ms pause after action
@@ -73,6 +82,8 @@ class Step(BaseModel):
             raise ValueError(
                 f"Step {self.id}: 'scroll' requires 'selector' or 'direction'+'amount'"
             )
+        if a == ActionType.PRESS and not self.key:
+            raise ValueError(f"Step {self.id}: 'press' requires 'key'")
         if a == ActionType.HOVER and not self.selector:
             raise ValueError(f"Step {self.id}: 'hover' requires 'selector'")
         if a == ActionType.SELECT:
@@ -82,6 +93,8 @@ class Step(BaseModel):
                 raise ValueError(f"Step {self.id}: 'select' requires 'value'")
         if a == ActionType.WAIT and not self.duration:
             raise ValueError(f"Step {self.id}: 'wait' requires 'duration'")
+        if a == ActionType.EVALUATE and not self.expression:
+            raise ValueError(f"Step {self.id}: 'evaluate' requires 'expression'")
         return self
 
 
