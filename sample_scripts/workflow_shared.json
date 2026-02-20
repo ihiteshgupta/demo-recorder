@@ -1,64 +1,64 @@
 {
   "metadata": {
-    "title": "Chunk 2: Platform Workflow",
-    "description": "Show the Channel AI Support workflow diagram — slow pan from start to end",
+    "title": "Shared Workflow Visualization",
+    "description": "DAG zoom and scroll animation showing the AI workflow pipeline — shared across all 3 demo videos",
     "base_url": "http://localhost:5173",
     "viewport": { "width": 1920, "height": 1080 },
     "voice": "en-US-AndrewNeural",
     "rate": "-5%",
-    "output_name": "chunk_2_platform"
+    "output_name": "workflow_shared"
   },
   "steps": [
     {
-      "id": "s01_nav_workflow_demo",
+      "id": "s01_nav",
       "action": "navigate",
       "url": "/ai-poc/workflow-demo",
       "narration": "",
       "wait_after": 2500
     },
     {
-      "id": "s02_wait_reactflow_render",
+      "id": "s02_wait_render",
       "action": "wait",
       "duration": 2000,
       "narration": "",
       "wait_after": 0
     },
     {
-      "id": "s03_zoom_to_start",
+      "id": "s03_zoom_start",
       "action": "evaluate",
       "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'none'; vp.style.transform = 'translate(100px, -50px) scale(1.6)'; } })()",
       "narration": "",
       "wait_after": 500
     },
     {
-      "id": "s04_narrate_overview",
+      "id": "s04_overview",
       "action": "screenshot",
       "narration": "Each customer interaction triggers a directed acyclic graph — a sequence of AI agents with built-in branching logic. Adding a new resolution type doesn't require code changes, just a new workflow configuration.",
       "wait_after": 1500
     },
     {
-      "id": "s05_pan_to_classify",
+      "id": "s05_pan_classify",
       "action": "evaluate",
       "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'transform 5s linear'; vp.style.transform = 'translate(-600px, -100px) scale(1.6)'; } })()",
-      "narration": "The classification stage uses a large language model to parse free-text messages into structured intents. It doesn't rely on keyword matching — it understands context, so 'my bill seems off' routes the same way as 'I was overcharged.'",
+      "narration": "The classification stage uses a large language model to parse free-text messages into structured intents. It doesn't rely on keyword matching — it understands context.",
       "wait_after": 5000
     },
     {
-      "id": "s06_pan_to_validate",
+      "id": "s06_pan_validate",
       "action": "evaluate",
       "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'transform 5s linear'; vp.style.transform = 'translate(-1400px, -200px) scale(1.6)'; } })()",
-      "narration": "Customer validation happens against the live CRM in real time. The trouble ticket follows TMF six-two-one standards — meaning it's interoperable with any downstream system, OSS, BSS, or third-party ticketing, without custom integration work.",
+      "narration": "Customer validation happens against the live CRM in real time. The trouble ticket follows TMF six-two-one standards — interoperable with any downstream system without custom integration.",
       "wait_after": 5000
     },
     {
-      "id": "s07_pan_to_resolution",
+      "id": "s07_pan_resolve",
       "action": "evaluate",
       "expression": "(() => { const vp = document.querySelector('.react-flow__viewport'); if (vp) { vp.style.transition = 'transform 5s linear'; vp.style.transform = 'translate(-2400px, -200px) scale(1.6)'; } })()",
-      "narration": "The resolution engine doesn't just categorize — it performs root cause analysis. Every decision is logged, every data point is traceable. If a regulator or QA team asks why a particular resolution was chosen, the full reasoning chain is in the audit trail.",
+      "narration": "The resolution engine performs root cause analysis. Every decision is logged, every data point is traceable. The full reasoning chain is available for audit.",
       "wait_after": 5000
     },
     {
-      "id": "s08_pause_end",
+      "id": "s08_end",
       "action": "wait",
       "duration": 1000,
       "narration": "",

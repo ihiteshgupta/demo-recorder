@@ -182,21 +182,33 @@ async def assemble_video(
             str(output_path),
         ]
     else:
-        # No subtitles — just merge video + audio
-        cmd = [
-            "ffmpeg", "-y",
-            "-i", str(video_path),
-            "-i", str(audio_path),
-            "-c:v", "libx264",
-            "-preset", "medium",
-            "-crf", "23",
-            "-c:a", "aac",
-            "-b:a", "128k",
-            "-map", "0:v",
-            "-map", "1:a",
-            "-shortest",
-            str(output_path),
-        ]
+        # No subtitles — merge video + audio, or video-only if audio is silent
+        has_real_audio = audio_path.exists() and audio_path.stat().st_size > 5000
+        if has_real_audio:
+            cmd = [
+                "ffmpeg", "-y",
+                "-i", str(video_path),
+                "-i", str(audio_path),
+                "-c:v", "libx264",
+                "-preset", "medium",
+                "-crf", "23",
+                "-c:a", "aac",
+                "-b:a", "128k",
+                "-map", "0:v",
+                "-map", "1:a",
+                "-shortest",
+                str(output_path),
+            ]
+        else:
+            cmd = [
+                "ffmpeg", "-y",
+                "-i", str(video_path),
+                "-c:v", "libx264",
+                "-preset", "medium",
+                "-crf", "23",
+                "-an",
+                str(output_path),
+            ]
 
     await _run_ffmpeg(cmd)
     return output_path

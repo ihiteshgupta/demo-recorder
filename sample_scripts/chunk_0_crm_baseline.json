@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "title": "Chunk 0: Empty CRM Baseline",
-    "description": "Show empty CRM ticket list to establish a clean starting point before the demo",
+    "title": "Chunk 0: CRM Baseline",
+    "description": "Show empty CRM ticket list to establish a clean starting point before the 3-path demo",
     "base_url": "",
     "viewport": { "width": 1920, "height": 1080 },
     "voice": "en-US-AndrewNeural",
     "rate": "-5%",
-    "output_name": "chunk_0_empty_crm"
+    "output_name": "chunk_0_crm_baseline"
   },
   "steps": [
     {
@@ -33,8 +33,8 @@
     {
       "id": "s04_show_empty",
       "action": "screenshot",
-      "narration": "No open tickets. In the next ninety seconds, a customer complaint will flow through three AI workflows and arrive here as a fully resolved ticket — without any human involvement.",
-      "wait_after": 2000
+      "narration": "",
+      "wait_after": 3000
     },
     {
       "id": "s05_pause",

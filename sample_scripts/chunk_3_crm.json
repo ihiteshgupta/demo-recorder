@@ -12,8 +12,8 @@
     {
       "id": "s01_transition",
       "action": "wait",
-      "duration": 1500,
-      "narration": "Finally, let's verify the result in the CRM portal.",
+      "duration": 500,
+      "narration": "Every automated resolution needs to be verifiable. The CRM is the system of record where agents, supervisors, and compliance teams audit what happened.",
       "wait_after": 500
     },
     {
@@ -21,26 +21,26 @@
       "action": "navigate",
       "url": "http://localhost:5173/ai-poc/crm-portal/tickets",
       "narration": "",
-      "wait_after": 8000
+      "wait_after": 3000
     },
     {
       "id": "s03_wait_tickets",
       "action": "screenshot",
-      "narration": "The ticket list now shows the billing dispute — created automatically during the conversation.",
-      "wait_after": 3000
+      "narration": "This ticket was created mid-conversation, before the resolution was even determined. Even if the AI had needed to escalate to a human agent, the full context and history would already be here.",
+      "wait_after": 1500
     },
     {
       "id": "s04_click_ticket",
       "action": "click",
       "selector": ".MuiDataGrid-row:first-child",
       "narration": "",
-      "wait_after": 2500
+      "wait_after": 1500
     },
     {
       "id": "s05_ticket_detail",
       "action": "screenshot",
-      "narration": "Category, priority, customer details, and resolution — all populated by the AI, fully auditable.",
-      "wait_after": 3000
+      "narration": "Every field was populated by the AI workflow — no manual data entry, no copy-paste from chat logs. Classification confidence, resolution rationale, and the full conversation transcript are all attached.",
+      "wait_after": 1500
     },
     {
       "id": "s06_scroll_to_conversation",
@@ -48,25 +48,25 @@
       "direction": "down",
       "amount": 600,
       "narration": "",
-      "wait_after": 1500
+      "wait_after": 1000
     },
     {
       "id": "s06b_click_conversation",
       "action": "click",
       "selector": "button:has-text('View Conversation')",
       "narration": "",
-      "wait_after": 4000
+      "wait_after": 2000
     },
     {
       "id": "s06c_view_conversation",
       "action": "screenshot",
-      "narration": "The complete Telegram conversation — every message, timestamp, and the AI's resolution — attached to the ticket for full compliance and quality review.",
-      "wait_after": 4000
+      "narration": "Compliance teams can verify exactly what the customer was told and confirm it matches the resolution applied. Same audit trail whether the interaction came through Telegram, WhatsApp, IVR, or any other channel.",
+      "wait_after": 1500
     },
     {
       "id": "s07_final",
       "action": "screenshot",
-      "narration": "A thirty-dollar billing dispute, resolved end-to-end — from Telegram chat, through AI workflow orchestration, to a closed CRM ticket. No hold time, no transfers, no human agent.",
+      "narration": "Sixty seconds from first message to resolved ticket. Scale this across thousands of daily interactions — that's the operational impact. No hold time, no transfers, no manual ticket creation.",
       "wait_after": 2000
     }
   ]

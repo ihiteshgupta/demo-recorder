@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "title": "Chunk 5: Path 3 — Agent Dashboard Review",
+    "description": "Human agent reviews escalated ticket in CRM, sees AI recommendation, resolves it",
+    "base_url": "http://localhost:5173",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_5_path3_agent"
+  },
+  "steps": [
+    {
+      "id": "s01_nav_tickets",
+      "action": "navigate",
+      "url": "/ai-poc/crm-portal/tickets",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s02_show_dashboard",
+      "action": "screenshot",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s03_click_ticket",
+      "action": "click",
+      "selector": ".MuiDataGrid-row:first-child",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s04_ticket_overview",
+      "action": "screenshot",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s05_scroll_to_details",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s06_scroll_to_actions",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 400,
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s07_click_status_dropdown",
+      "action": "click",
+      "selector": "[role='combobox']",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s08_select_resolved",
+      "action": "click",
+      "selector": "[role='option']:has-text('Resolved')",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s09_click_update",
+      "action": "click",
+      "selector": "button:has-text('Update Status')",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s10_show_resolved",
+      "action": "screenshot",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s11_end",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "",
+      "wait_after": 0
+    }
+  ]
+}

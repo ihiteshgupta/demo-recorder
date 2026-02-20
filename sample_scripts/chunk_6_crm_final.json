@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "title": "Chunk 6: CRM Final — All Tickets",
+    "description": "Show all tickets from Path 2 and Path 3 in the CRM",
+    "base_url": "",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_6_crm_final"
+  },
+  "steps": [
+    {
+      "id": "s01_nav_crm",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/crm-portal/tickets",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s02_show_all_tickets",
+      "action": "screenshot",
+      "narration": "",
+      "wait_after": 4000
+    },
+    {
+      "id": "s03_final_pause",
+      "action": "wait",
+      "duration": 3000,
+      "narration": "",
+      "wait_after": 0
+    }
+  ]
+}

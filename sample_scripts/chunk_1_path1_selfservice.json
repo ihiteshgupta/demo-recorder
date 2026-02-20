@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "title": "Chunk 1: Path 1 — Self-Service Resolution",
+    "description": "Customer C006064 (Priya Sharma) asks about Japan roaming via chat popup, AI explains, customer satisfied, no ticket needed",
+    "base_url": "",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_1_path1_selfservice"
+  },
+  "steps": [
+    {
+      "id": "s01_nav_backend",
+      "action": "navigate",
+      "url": "http://localhost:8010/health",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s02_cleanup",
+      "action": "evaluate",
+      "expression": "(async () => { try { await fetch('/channel-router/reset', { method: 'POST' }); } catch(e) {} })()",
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s03_open_chat",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/crm-portal/live-chat-popup?customerId=C006064",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s04_type_msg1",
+      "action": "type",
+      "selector": "[placeholder=\"Type a message...\"]",
+      "value": "Hi, I'm traveling to Japan next month. I need to know about international roaming charges and data plans available for my account.",
+      "type_delay": 30,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s05_send_msg1",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s06_wait_response1",
+      "action": "wait",
+      "duration": 20000,
+      "narration": "",
+      "wait_after": 0
+    },
+    {
+      "id": "s07_scroll1",
+      "action": "evaluate",
+      "expression": "(() => { document.querySelectorAll('div').forEach(el => { if (el.scrollHeight > el.clientHeight + 20 && el.clientHeight > 200) el.scrollTop = el.scrollHeight; }); })()",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s08_type_msg2",
+      "action": "type",
+      "selector": "[placeholder=\"Type a message...\"]",
+      "value": "What about data-only plans? I mainly need mobile data for maps and messaging. Also, will my current plan's unused data roll over?",
+      "type_delay": 30,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s09_send_msg2",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s10_wait_response2",
+      "action": "wait",
+      "duration": 20000,
+      "narration": "",
+      "wait_after": 0
+    },
+    {
+      "id": "s11_scroll2",
+      "action": "evaluate",
+      "expression": "(() => { document.querySelectorAll('div').forEach(el => { if (el.scrollHeight > el.clientHeight + 20 && el.clientHeight > 200) el.scrollTop = el.scrollHeight; }); })()",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s12_type_msg3",
+      "action": "type",
+      "selector": "[placeholder=\"Type a message...\"]",
+      "value": "That's really helpful, thank you! I think I'll go with the data add-on. One last thing - do I need to do anything to activate roaming before I travel?",
+      "type_delay": 30,
+      "narration": "",
+      "wait_after": 500
+    },
+    {
+      "id": "s13_send_msg3",
+      "action": "press",
+      "key": "Enter",
+      "narration": "",
+      "wait_after": 1000
+    },
+    {
+      "id": "s14_wait_response3",
+      "action": "wait",
+      "duration": 20000,
+      "narration": "",
+      "wait_after": 0
+    },
+    {
+      "id": "s15_scroll3",
+      "action": "evaluate",
+      "expression": "(() => { document.querySelectorAll('div').forEach(el => { if (el.scrollHeight > el.clientHeight + 20 && el.clientHeight > 200) el.scrollTop = el.scrollHeight; }); })()",
+      "narration": "",
+      "wait_after": 4000
+    },
+    {
+      "id": "s16_end",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "",
+      "wait_after": 0
+    }
+  ]
+}

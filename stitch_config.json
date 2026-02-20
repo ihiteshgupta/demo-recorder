@@ -1,13 +1,16 @@
 {
-  "output_name": "billing_dispute_30_demo_branded",
+  "output_name": "ticketing_journeys_demo",
   "clips": [
     "transitions/out/intro.mp4",
-    { "source": "output/chunk_0_empty_crm.mp4", "start_at": 17.0, "label": "Empty CRM Baseline" },
-    { "source": "output/chunk_1_telegram.mp4", "start_at": 15.0, "label": "Telegram Chat" },
+    { "source": "output/chunk_0_crm_baseline.mp4", "start_at": 8.0, "label": "CRM Baseline" },
+    { "source": "output/chunk_1_path1_selfservice.mp4", "start_at": 8.0, "label": "Path 1: Self-Service" },
     "transitions/out/transition-1.mp4",
-    { "source": "output/chunk_2_platform.mp4", "start_at": 5.0, "label": "Platform Workflow" },
+    { "source": "output/chunk_2_path2_autoclose.mp4", "start_at": 8.0, "label": "Path 2: Auto-Close" },
+    { "source": "output/chunk_3_path2_crm.mp4", "start_at": 2.0, "label": "Path 2: CRM Check" },
     "transitions/out/transition-2.mp4",
-    { "source": "output/chunk_3_crm.mp4", "start_at": 11.0, "label": "CRM Portal" },
+    { "source": "output/chunk_4_path3_escalation.mp4", "start_at": 8.0, "label": "Path 3: Escalation" },
+    { "source": "output/chunk_5_path3_agent.mp4", "start_at": 2.0, "label": "Path 3: Agent Review" },
+    { "source": "output/chunk_6_crm_final.mp4", "start_at": 2.0, "label": "CRM Final" },
     "transitions/out/outro.mp4"
   ]
 }

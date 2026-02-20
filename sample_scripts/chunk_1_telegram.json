@@ -49,8 +49,8 @@
       "id": "s04_narrate_intro",
       "action": "wait",
       "duration": 500,
-      "narration": "A customer notices an unexpected charge on their bill. They open Telegram and message their provider's support bot.",
-      "wait_after": 1500
+      "narration": "A customer notices an unexpected charge on their bill. No app to download, no call center to dial — they message their provider directly on Telegram.",
+      "wait_after": 1000
     },
     {
       "id": "s05_focus_1",
@@ -73,14 +73,21 @@
       "action": "press",
       "key": "Enter",
       "narration": "",
-      "wait_after": 18000
+      "wait_after": 2000
+    },
+    {
+      "id": "s07b_narrate_processing_1",
+      "action": "wait",
+      "duration": 15000,
+      "narration": "That message just triggered the platform's Channel Digestion workflow — a chain of AI agents running asynchronously. The first agent classifies the intent as a billing complaint. A second validates the customer identity against the CRM. A third extracts structured billing fields from the free-text message. All of this happens in parallel, without any predefined conversation scripts.",
+      "wait_after": 1000
     },
     {
       "id": "s08_scroll_reply_1",
       "action": "evaluate",
       "expression": "(() => { const el = document.querySelector('.bubbles-inner'); if (el) el.scrollTop = el.scrollHeight; document.querySelectorAll('.scrollable, .scrollable-y').forEach(e => { e.scrollTop = e.scrollHeight; }); })()",
-      "narration": "The AI classifies this as a billing complaint and responds with a targeted follow-up.",
-      "wait_after": 3000
+      "narration": "The bot needs more context to proceed — so it asks, rather than guessing.",
+      "wait_after": 1000
     },
     {
       "id": "s09_focus_2",
@@ -103,35 +110,42 @@
       "action": "press",
       "key": "Enter",
       "narration": "",
-      "wait_after": 3000
+      "wait_after": 1000
     },
     {
-      "id": "s12_narrate_while_waiting",
+      "id": "s12_narrate_processing_2a",
       "action": "wait",
-      "duration": 20000,
-      "narration": "Behind the scenes, the platform validates the customer against the CRM, creates a trouble ticket, and triggers the billing analysis engine.",
-      "wait_after": 5000
+      "duration": 12000,
+      "narration": "Now the billing resolution engine takes over. It pulls the customer's twelve-month payment history from the CRM, compares each line item against the current plan, and identifies the discrepancy — a Streaming Plus HD add-on activated last month that increased the monthly charge by thirty dollars.",
+      "wait_after": 0
+    },
+    {
+      "id": "s12b_narrate_processing_2b",
+      "action": "wait",
+      "duration": 12000,
+      "narration": "Based on that analysis, the engine determines the appropriate response — explain the charge, offer a credit, or escalate. It drafts the customer-facing message, updates the trouble ticket status to resolved, and routes the response back through Telegram — closing the loop entirely within the AI workflow.",
+      "wait_after": 1000
     },
     {
       "id": "s13_scroll_resolution",
       "action": "evaluate",
       "expression": "(() => { const el = document.querySelector('.bubbles-inner'); if (el) el.scrollTop = el.scrollHeight; document.querySelectorAll('.scrollable, .scrollable-y').forEach(e => { e.scrollTop = e.scrollHeight; }); })()",
       "narration": "",
-      "wait_after": 2000
+      "wait_after": 500
     },
     {
       "id": "s14_scroll_again",
       "action": "evaluate",
       "expression": "(() => { const el = document.querySelector('.bubbles-inner'); if (el) el.scrollTop = el.scrollHeight; document.querySelectorAll('.scrollable, .scrollable-y').forEach(e => { e.scrollTop = e.scrollHeight; }); })()",
-      "narration": "The AI explains the root cause, applies the resolution, and closes the ticket — two exchanges, zero human intervention.",
-      "wait_after": 4000
+      "narration": "Two exchanges, zero human intervention. The customer has their answer, and the ticket is already closed in the CRM.",
+      "wait_after": 1500
     },
     {
       "id": "s15_end",
       "action": "wait",
-      "duration": 1500,
-      "narration": "Now let's look behind the scenes at how the AI platform orchestrated this.",
-      "wait_after": 1500
+      "duration": 1000,
+      "narration": "Now let's look at the workflow that orchestrated all of this.",
+      "wait_after": 1000
     }
   ]
 }

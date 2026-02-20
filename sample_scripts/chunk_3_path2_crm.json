@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "title": "Chunk 3: Path 2 — CRM Verification",
+    "description": "Show the auto-closed ticket from Path 2 in the CRM portal",
+    "base_url": "",
+    "viewport": { "width": 1920, "height": 1080 },
+    "voice": "en-US-AndrewNeural",
+    "rate": "-5%",
+    "output_name": "chunk_3_path2_crm"
+  },
+  "steps": [
+    {
+      "id": "s01_nav_crm",
+      "action": "navigate",
+      "url": "http://localhost:5173/ai-poc/crm-portal/tickets",
+      "narration": "",
+      "wait_after": 5000
+    },
+    {
+      "id": "s02_show_ticket_list",
+      "action": "screenshot",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s03_click_ticket",
+      "action": "click",
+      "selector": ".MuiDataGrid-row:first-child",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s04_ticket_detail",
+      "action": "screenshot",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s05_scroll_detail",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 600,
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s06_end",
+      "action": "wait",
+      "duration": 2000,
+      "narration": "",
+      "wait_after": 0
+    }
+  ]
+}
