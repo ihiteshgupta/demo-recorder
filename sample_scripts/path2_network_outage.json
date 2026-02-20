@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Path 2 - Network Outage Auto-Resolved",
+    "description": "Customer reports internet not working, AI finds outage record and auto-resolves with refund",
+    "base_url": "http://localhost:5173",
+    "viewport": { "width": 1440, "height": 900 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "path2_network_outage"
+  },
+  "steps": [
+    {
+      "id": "s01_open_chat",
+      "action": "navigate",
+      "url": "/ai-poc/crm-portal/live-chat-popup?customerId=C006091",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s02_type_verify",
+      "action": "type",
+      "selector": "textarea:not([readonly])",
+      "value": "6091",
+      "narration": "",
+      "wait_after": 400
+    },
+    {
+      "id": "s03_send_verify",
+      "action": "click",
+      "selector": "button:has([data-testid='SendIcon'])",
+      "narration": "",
+      "wait_after": 1800
+    },
+    {
+      "id": "s04_type_complaint",
+      "action": "type",
+      "selector": "textarea:not([readonly])",
+      "value": "Internet is not working on my phone again",
+      "narration": "",
+      "wait_after": 400
+    },
+    {
+      "id": "s05_send_complaint",
+      "action": "click",
+      "selector": "button:has([data-testid='SendIcon'])",
+      "narration": "",
+      "wait_after": 22000
+    },
+    {
+      "id": "s06_type_details",
+      "action": "type",
+      "selector": "textarea:not([readonly])",
+      "value": "iPhone 15, Minneapolis area",
+      "narration": "",
+      "wait_after": 400
+    },
+    {
+      "id": "s07_send_details",
+      "action": "click",
+      "selector": "button:has([data-testid='SendIcon'])",
+      "narration": "",
+      "wait_after": 42000
+    },
+    {
+      "id": "s08_open_ticket",
+      "action": "navigate",
+      "url": "/ai-poc/crm-portal/tickets/TKT-00001",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s09_scroll_to_trail",
+      "action": "scroll",
+      "selector": "h6:has-text('AI Decision Trail')",
+      "narration": "",
+      "wait_after": 3000
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "title": "Path 3 - Billing Dispute Escalated to Agent",
+    "description": "Customer reports 3 months of overbilling, AI escalates to specialist and shows agent recommendations",
+    "base_url": "http://localhost:5173",
+    "viewport": { "width": 1440, "height": 900 },
+    "voice": "en-US-GuyNeural",
+    "rate": "-5%",
+    "output_name": "path3_billing_escalation"
+  },
+  "steps": [
+    {
+      "id": "s01_open_chat",
+      "action": "navigate",
+      "url": "/ai-poc/crm-portal/live-chat-popup?customerId=C006092",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s02_type_verify",
+      "action": "type",
+      "selector": "textarea:not([readonly])",
+      "value": "6092",
+      "narration": "",
+      "wait_after": 400
+    },
+    {
+      "id": "s03_send_verify",
+      "action": "click",
+      "selector": "button:has([data-testid='SendIcon'])",
+      "narration": "",
+      "wait_after": 1800
+    },
+    {
+      "id": "s04_type_complaint",
+      "action": "type",
+      "selector": "textarea:not([readonly])",
+      "value": "For the past 3 months my bill is $50 higher than my $199 plan",
+      "narration": "",
+      "wait_after": 400
+    },
+    {
+      "id": "s05_send_complaint",
+      "action": "click",
+      "selector": "button:has([data-testid='SendIcon'])",
+      "narration": "",
+      "wait_after": 42000
+    },
+    {
+      "id": "s06_open_ticket",
+      "action": "navigate",
+      "url": "/ai-poc/crm-portal/tickets/TKT-00002",
+      "narration": "",
+      "wait_after": 3000
+    },
+    {
+      "id": "s07_scroll_to_trail",
+      "action": "scroll",
+      "selector": "h6:has-text('AI Decision Trail')",
+      "narration": "",
+      "wait_after": 2000
+    },
+    {
+      "id": "s08_scroll_to_recommendations",
+      "action": "scroll",
+      "selector": "h6:has-text('Agent Recommendations')",
+      "narration": "",
+      "wait_after": 3000
+    }
+  ]
+}
